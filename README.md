@@ -11,7 +11,7 @@ Group 21 public repository
 - [@Richard Tubbs](https://github.com/Kedrik84) - Product Owner
 - [@Daniel Vetan](https://github.com/danielvetan) - Developer
 - [@James Vega](https://github.com/Jamesondawg) - Developer
-- [@William Valido](https://www.github.com/octokatherine) - Developer
+- [@William Valido](https://www.github.com/willysyztem) - Developer
 ## Acknowledgements
 
 As scrum Master this file should be updated regularly by **Carlos Valle**
