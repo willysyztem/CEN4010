@@ -23,4 +23,4 @@ As scrum Master this file should be updated regularly by **Carlos Valle**
 ### Framework
 [Springboot](https://spring.io/projects/spring-boot)
 ### Backend
-Amazon Aurora PostgreSQL-Compatible (for now)
+[PostgreSQL](https://www.postgresql.org/download/)
