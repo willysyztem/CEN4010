@@ -1,6 +1,9 @@
+
 # CEN4010
 
 Group 21 public repository
+
+
 
 ## Authors
 
@@ -9,7 +12,6 @@ Group 21 public repository
 - [@Daniel Vetan](https://github.com/danielvetan) - Developer
 - [@James Vega](https://github.com/Jamesondawg) - Developer
 - [@William Valido](https://www.github.com/willysyztem) - Developer
-
 ## Acknowledgements
 
 As scrum Master this file should be updated regularly by **Carlos Valle**
@@ -19,9 +21,6 @@ As scrum Master this file should be updated regularly by **Carlos Valle**
 ## Documentation
 
 ### Framework
-
 [Springboot](https://spring.io/projects/spring-boot)
-
 ### Backend
-
-Amazon Aurora PostgreSQL-Compatible (for now)
+[PostgreSQL](https://www.postgresql.org/download/)
