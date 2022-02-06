@@ -7,11 +7,11 @@ Group 21 public repository
 
 ## Authors
 
-- [@Carlos Valle](https://github.com/cvall91) - Scrum Master
-- [@Richard Tubbs](https://github.com/Kedrik84) - Product Owner
-- [@Daniel Vetan](https://github.com/danielvetan) - Developer
-- [@James Vega](https://github.com/Jamesondawg) - Developer
-- [@William Valido](https://www.github.com/willysyztem) - Developer
+- [@Carlos Valle](https://github.com/cvall91) 
+- [@Richard Tubbs](https://github.com/Kedrik84) 
+- [@Daniel Vetan](https://github.com/danielvetan) 
+- [@James Vega](https://github.com/Jamesondawg) 
+- [@William Valido](https://www.github.com/willysyztem) 
 ## Acknowledgements
 
 As scrum Master this file should be updated regularly by **Carlos Valle**
