@@ -12,7 +12,7 @@ Group 21 public repository
 - [@Daniel Vetan](https://github.com/danielvetan) 
 - [@James Vega](https://github.com/Jamesondawg) 
 - [@William Valido](https://www.github.com/willysyztem)
-- [@Lucho Varela] (https://github.com/LucianoVarela)
+- [@Lucho Varela](https://github.com/LucianoVarela)
 ## Acknowledgements
 
 As scrum Master this file should be updated regularly by **Carlos Valle**
