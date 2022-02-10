@@ -25,3 +25,11 @@ As scrum Master this file should be updated regularly by **Carlos Valle**
 [Springboot](https://spring.io/projects/spring-boot)
 ### Backend
 [PostgreSQL](https://www.postgresql.org/download/)
+
+### Sprint 1
+Scrum Master - Daniel
+Product Owner - Richard Tubbs
+
+### Sprint 2
+Scrum Master - Lucho
+Product Owner - CVal
