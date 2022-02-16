@@ -15,8 +15,6 @@
 
 ## Features
 
-**Feature 1: Book Browsing and Sorting**
-
 API Actions
 
 - Retrieve List of Books by Genre
