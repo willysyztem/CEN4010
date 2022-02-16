@@ -3,6 +3,8 @@
 ## Index
 
 - [Installation](https://github.com/willysyztem/CEN4010/tree/profile-management#installation)
+  - [Windows](https://github.com/willysyztem/CEN4010/tree/profile-management#windows)
+  - [Mac](https://github.com/willysyztem/CEN4010/tree/profile-management#mac)
 - [Documenation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
 - [Contributing](https://github.com/willysyztem/CEN4010/tree/profile-management#contributing)
 - [Tests](https://github.com/willysyztem/CEN4010/tree/profile-management#running-tests)
@@ -84,17 +86,6 @@ To ensure that everything runs smoothly, please download:
 - The latest [python](https://www.python.org/downloads/release/python-3102/) version
 - The latest [postgreSQL](https://www.postgresql.org/download/windows/) version (windows)
 
-**_Note: DB ISSUES_**
-
-If you are experiencing issues with the `setup.bat` not loading correctly, you might not have configured your Database locally.
-By Default, the DB Config is set to
-
-![](https://i.ibb.co/qRWQDW6/code1.png)
-
-If the setting is `True` will automatically use the Heroku DB.
-
-## PLEASE USE YOUR LOCAL DB FOR TESTING!
-
 ### MAC
 
 cd into `CEN4010`
@@ -119,6 +110,17 @@ When uvicorn is online, go to `http://127.0.0.1:8000/docs` on your browser to us
 
 - The latest [python](https://www.python.org/downloads/release/python-3102/) version
 - The latest [postgreSQL](https://www.postgresql.org/download/macosx/) version (mac)
+
+**_Note: DB ISSUES_**
+
+If you are experiencing issues with the `setup.bat` not loading correctly, you might not have configured your Database locally.
+By Default, the DB Config is set to
+
+![](https://i.ibb.co/qRWQDW6/code1.png)
+
+If the setting is `True` will automatically use the Heroku DB.
+
+**_PLEASE USE YOUR LOCAL DB FOR TESTING!_**
 
 ## Documentation
 
