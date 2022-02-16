@@ -72,12 +72,13 @@ API Actions
 ## Installation
 
 Clone the Repo or Download the Zip File from the Repo
+**_setup been renamed to run_app_**
 
 [ZIP](https://github.com/willysyztem/CEN4010/archive/refs/heads/main.zip) if you are lazy...
 
 ### Windows
 
-For windows users, a `setup.bat` has been added, which will create your virtual environment for you.
+For windows users, a `run_app.bat` has been added, which will create your virtual environment for you.
 
 ![](https://i.ibb.co/zHDRw8S/setup-gif.gif)
 
@@ -90,10 +91,10 @@ To ensure that everything runs smoothly, please download:
 
 cd into `CEN4010`
 
-On the terminal give permission to setup.sh to run / run the setup.sh (dont forget the dot . )
+On the terminal give permission to run_app.sh to run / run run_app.sh (dont forget the dot . )
 
-- `chmod +x setup.sh`
-- `./setup.sh`
+- `chmod +x run_app.sh`
+- `./run_app.sh`
 
 ![](https://i.ibb.co/WPrRNkV/setup-mac-gif.gif)
 
@@ -111,9 +112,9 @@ When uvicorn is online, go to `http://127.0.0.1:8000/docs` on your browser to us
 - The latest [python](https://www.python.org/downloads/release/python-3102/) version
 - The latest [postgreSQL](https://www.postgresql.org/download/macosx/) version (mac)
 
-**_Note: DB ISSUES_**
+**_Note: Known ISSUES_**
 
-If you are experiencing issues with the `setup.bat` not loading correctly, you might not have configured your Database locally.
+If you are experiencing issues with the `run_app` not loading correctly, you might not have configured your Database locally.
 By Default, the DB Config is set to
 
 ![](https://i.ibb.co/qRWQDW6/code1.png)
