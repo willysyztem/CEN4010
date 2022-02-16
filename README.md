@@ -97,7 +97,15 @@ If the setting is `True` will automatically use the Heroku DB.
 
 ### MAC
 
-MAC setup files are coming soon.
+cd into `CEN4010`
+
+On the terminal give permission to setup.sh to run / run the setup.sh (dont forget the dot . )
+
+- `chmod +x setup.sh`
+- `./setup.sh`
+
+![](https://i.ibb.co/WPrRNkV/setup-mac-gif.gif)
+
 For now, run it on the terminal 👨‍💻
 
 - `cd CEN4010` Go inside project folder
