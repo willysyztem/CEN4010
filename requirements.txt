@@ -1,0 +1,10 @@
+# fastapi
+fastapi
+uvicorn
+
+# pydnatic Email Validation
+pydantic[email]
+
+# for database management
+sqlalchemy
+psycopg2
