@@ -106,7 +106,7 @@ On the terminal give permission to setup.sh to run / run the setup.sh (dont forg
 
 ![](https://i.ibb.co/WPrRNkV/setup-mac-gif.gif)
 
-For now, run it on the terminal 👨‍💻
+To use in terminal 👨‍💻
 
 - `cd CEN4010` Go inside project folder
 - `python3 -m venv venv` Create your virtual environment
