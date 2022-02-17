@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, status, HTTPException
+from typing import List
 
 # Settings For Fast API & DB
 from config.settings import settings
@@ -13,11 +14,10 @@ from db.models import Base
 Base.metadata.create_all(bind=engine)
 
 # Import the rest of the models under here
-from db.models import User, Credit_Card
+from db.models import User
 
 # Schema
-from schemas.user_schema import User_Schema
-from schemas.credit_card_schema import Credit_Card_Schema
+import schemas
 
 #Gets the Database DONT DELETE
 def get_db():
@@ -40,15 +40,15 @@ app = start_app()
 # Put your creating APIS/ENDPOINT UNDER HERE
 #
 # Root Welcome Message
-@app.get('/')
+@app.get('/', tags=['ROOT API'])
 def root():
     return 'This is the root page, use /docs to use restfulAPI'
 
 # PROFILE MANAGEMENT
-@app.post('/api/users', status_code=status.HTTP_201_CREATED)
-def create_users(user: User_Schema, db: Session = Depends(get_db)):
+@app.post('/api/users', status_code=status.HTTP_201_CREATED, tags=['Profile Management'])
+def create_users(user: schemas.User, db: Session = Depends(get_db)):
     new_user = User(
-        email_address = user.email,
+        email = user.email,
         password = user.password,
         username = user.email,
         name = user.name,
@@ -62,22 +62,23 @@ def create_users(user: User_Schema, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail='User already exists')
 
-@app.get('/api/users')
+@app.get('/api/users', response_model=List[schemas.ShowUser] , tags=['Profile Management'])
 def get_all_users(db: Session = Depends(get_db)):
     users = db.query(User).all()
     if not users:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find users')
+    print(type(users))
     return users
 
-@app.get('/api/users/{username}')
+@app.get('/api/users/{username}', response_model=List[schemas.ShowUser], tags=['Profile Management'])
 def get_user(username, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == username).first()
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
     return user
 
-@app.put('/api/users/{username}', status_code=status.HTTP_202_ACCEPTED)
-def update_user(username, user: User_Schema, db: Session = Depends(get_db)):
+@app.put('/api/users/{username}', status_code=status.HTTP_202_ACCEPTED, tags=['Profile Management'])
+def update_user(username, user: schemas.User, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == username).update({
         'password': user.password,
         'name': user.name,
@@ -88,25 +89,8 @@ def update_user(username, user: User_Schema, db: Session = Depends(get_db)):
     db.commit()
     return {'detail': f'Update user {username}'}
 
-@app.delete('/api/users/{username}', status_code=status.HTTP_204_NO_CONTENT)
+@app.delete('/api/users/{username}', status_code=status.HTTP_204_NO_CONTENT, tags=['Profile Management'])
 def delete_user(username, db: Session = Depends(get_db)):
     db.query(User).filter(User.username == username).delete()
     db.commit()
     return {'detail': f'Deleted user {username}'}
-
-# Credit Card API
-@app.post('/api/user/{username}')
-def create_card(username, credit_card: Credit_Card_Schema, db: Session = Depends(get_db)):
-    new_credit_card = Credit_Card(
-        card_number = credit_card.card_number,
-        expiration_date = credit_card.expiration_date,
-        ccv = credit_card.ccv,
-        card_name = credit_card.card_name
-    )
-    try:
-        db.add(new_credit_card)
-        db.commit()
-        db.refresh(new_credit_card)
-        return new_credit_card
-    except Exception as e:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Something happened -> {e}')
