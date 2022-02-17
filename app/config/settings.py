@@ -4,7 +4,7 @@ class Settings():
 
     # postgres settings
 
-    POSTGRES_LOCAL: bool = True
+    POSTGRES_LOCAL: bool = False
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
     POSTGRES_SERVER: str

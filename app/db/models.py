@@ -1,4 +1,11 @@
 # DB MODELS
+from ctypes import Array
+from curses.ascii import isblank
+from numbers import Number
+from tokenize import Double
+from turtle import title
+
+from h11 import Data
 from db.database import Base
 from sqlalchemy import Column, Integer, String, null
 
@@ -20,4 +27,26 @@ class User(Base):
     def __repr__(self):
         return f"<User(username={self.username})>"
 
-# 
+# BOOK MODEL
+class Book(Base):
+    __tablename__ = 'books'
+
+    isbn =  Column(String, unique = True, nullable = False, primary_key = True)
+    title = Column(String, nullable = False)
+    author_id = Column(Integer, nullable = False)
+    publisher = Column(String, nullable = False)
+    publishedDate = Column(Data, nullable = False)
+    description = Column(String)
+    price = Column(Number, nullable = False)
+    copiesSold = Column(Integer, nullable = False)
+
+# AUTHOR MODEL
+class Author(Base):
+    __tablename__='authors'
+
+    author_id = Column(Integer, nullable=False, unique=True, primary_key=True, index=True)
+    firstName = Column(String, nullable=False)
+    lastName = Column(String, nullable=False)
+    publisher = Column(String)
+    biography = Column(String)
+    books = Column(Array)
