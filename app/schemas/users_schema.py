@@ -5,8 +5,6 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr
 from sqlalchemy import Integer
 
-from app.db.models import Book
-
 class UserSchema(BaseModel):
     email: EmailStr
     password: str

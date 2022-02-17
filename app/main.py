@@ -1,4 +1,6 @@
 from fastapi import FastAPI, Depends, status, HTTPException
+from app.db.models import Book
+from app.schemas.users_schema import AuthorSchema, BookSchema, UserSchema
 
 # Settings For Fast API & DB
 from config.settings import settings
@@ -78,6 +80,32 @@ def get_user(username, db: Session = Depends(get_db)):
 @app.put('/api/users/{username}', status_code=status.HTTP_202_ACCEPTED)
 def update_user(username, user: UserSchema, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == username).update({
+        'password': user.password,
+        'name': user.name,
+        'home_address': user.home_address
+    })
+    if not user:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
+    db.commit()
+    return {'detail': f'Update user {username}'}
+
+@app.get('/api/books')
+def get_all_books(db: Session = Depends(get_db)):
+    book = db.query(User).all()
+    if not book:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find books')
+    return book
+
+@app.get('/api/books/{isbn}')
+def get_user(isbn, db: Session = Depends(get_db)):
+    book = db.query(Book).filter(Book.isbn == isbn).first()
+    if not book:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')
+    return book
+
+@app.put('/api/book/{isbn}', status_code=status.HTTP_202_ACCEPTED)
+def update_book(isbn, book: BookSchema, db: Session = Depends(get_db)):
+    book = db.query(User).filter(User.username == username).update({
         'password': user.password,
         'name': user.name,
         'home_address': user.home_address
