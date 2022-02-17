@@ -35,3 +35,4 @@ class AuthorSchema(BaseModel):
     publisher = str
     biography = str
     books = Array
+    
