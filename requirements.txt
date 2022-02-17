@@ -2,6 +2,9 @@
 fastapi
 uvicorn
 
+# Autopep8
+Autopep8
+
 # pydnatic Email Validation
 pydantic[email]
 
