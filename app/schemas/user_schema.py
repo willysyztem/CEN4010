@@ -9,6 +9,3 @@ class User_Schema(BaseModel):
     # Optional Fields To Project Specs
     name: Optional[str]
     home_address: Optional[str]
-
-class Credit_Card_Schema(BaseModel):
-    pass

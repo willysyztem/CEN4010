@@ -5,7 +5,7 @@
 - [Installation](https://github.com/willysyztem/CEN4010/tree/profile-management#installation)
   - [Windows](https://github.com/willysyztem/CEN4010/tree/profile-management#windows)
   - [Mac](https://github.com/willysyztem/CEN4010/tree/profile-management#mac)
-- [Documenation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
+- [Documentation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
 - [Contributing](https://github.com/willysyztem/CEN4010/tree/profile-management#contributing)
 - [Tests](https://github.com/willysyztem/CEN4010/tree/profile-management#running-tests)
 

@@ -28,11 +28,8 @@ class Credit_Card(Base):
 
     id = Column(Integer, primary_key = True, index=True)
     card_number = Column(String, nullable=False)
-    expirate_date = Column(String, nullable=False)
+    expiration_date = Column(String, nullable=False)
     ccv = Column(String, nullable=False)
     card_name = Column(String, nullable=False)
     owner = relationship('User', back_populates='credit_cards')
     user_id = Column(Integer, ForeignKey('users.id'))
-
-    def __repr__(self):
-        return f'<Credit_Card( ending in {self.card_number[-4:]})>'

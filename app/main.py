@@ -16,7 +16,8 @@ Base.metadata.create_all(bind=engine)
 from db.models import User, Credit_Card
 
 # Schema
-from schemas.user_schema import User_Schema, Credit_Card_Schema
+from schemas.user_schema import User_Schema
+from schemas.credit_card_schema import Credit_Card_Schema
 
 #Gets the Database DONT DELETE
 def get_db():
@@ -87,6 +88,25 @@ def update_user(username, user: User_Schema, db: Session = Depends(get_db)):
     db.commit()
     return {'detail': f'Update user {username}'}
 
-@app.get('/api/user/{username}')
+@app.delete('/api/users/{username}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(username, db: Session = Depends(get_db)):
+    db.query(User).filter(User.username == username).delete()
+    db.commit()
+    return {'detail': f'Deleted user {username}'}
+
+# Credit Card API
+@app.post('/api/user/{username}')
 def create_card(username, credit_card: Credit_Card_Schema, db: Session = Depends(get_db)):
-    return {}
+    new_credit_card = Credit_Card(
+        card_number = credit_card.card_number,
+        expiration_date = credit_card.expiration_date,
+        ccv = credit_card.ccv,
+        card_name = credit_card.card_name
+    )
+    try:
+        db.add(new_credit_card)
+        db.commit()
+        db.refresh(new_credit_card)
+        return new_credit_card
+    except Exception as e:
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Something happened -> {e}')
