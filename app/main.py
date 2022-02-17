@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Depends, status, HTTPException
-from app.db.models import Book
+from app.db.models import Author, Book, User
 from app.schemas.users_schema import AuthorSchema, BookSchema, UserSchema
 
 # Settings For Fast API & DB
@@ -62,6 +62,8 @@ def create_users(user: UserSchema, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail='User already exists')
 
+# ---------------------
+# Users
 
 @app.get('/api/users')
 def get_all_users(db: Session = Depends(get_db)):
@@ -89,6 +91,9 @@ def update_user(username, user: UserSchema, db: Session = Depends(get_db)):
     db.commit()
     return {'detail': f'Update user {username}'}
 
+# ---------------------
+# Books
+
 @app.get('/api/books')
 def get_all_books(db: Session = Depends(get_db)):
     book = db.query(User).all()
@@ -103,14 +108,54 @@ def get_user(isbn, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')
     return book
 
-@app.put('/api/book/{isbn}', status_code=status.HTTP_202_ACCEPTED)
+@app.put('/api/books/{isbn}', status_code=status.HTTP_202_ACCEPTED)
 def update_book(isbn, book: BookSchema, db: Session = Depends(get_db)):
-    book = db.query(User).filter(User.username == username).update({
-        'password': user.password,
-        'name': user.name,
-        'home_address': user.home_address
+    book = db.query(Book).filter(Book.isbn == isbn).update({
+        'isbn': book.isbn,
+        'title': book.title,
+        'author_id': book.author_id,
+        'description': book.description,
+        'publisher': book.publisher,
+        'publishDate': book.publishedDate,
+        'copiesSold': book.copiesSold,
+        'price': book.price
     })
-    if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
+    if not book:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')
     db.commit()
-    return {'detail': f'Update user {username}'}
+    return {'detail': f'Update book {isbn}'}
+
+# ---------------------
+# Authors
+
+@app.get('/api/authors')
+def get_all_books(db: Session = Depends(get_db)):
+    author = db.query(Author).all()
+    if not author:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find authors')
+    return author
+
+
+@app.get('/api/authors/{author_id}')
+def get_user(author_id, db: Session = Depends(get_db)):
+    author = db.query(Author).filter(author.author_id == author_id).first()
+    if not author:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,f'No query found with author: {author_id}')
+    return author
+
+
+@app.put('/api/authors/{author_id}', status_code=status.HTTP_202_ACCEPTED)
+def update_author(author_id, author: AuthorSchema, db: Session = Depends(get_db)):
+    author = db.query(Author).filter(Author.author_id == author_id).update({
+        'author_id': author.author_id,
+        'firstName': author.firstName,
+        'lastName': author.lastName,
+        'publisher': author.publisher,
+        'biography': author.biography,
+        'books': author.books
+    })
+    if not author:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,
+                            f'No query found with author_id: {author_id}')
+    db.commit()
+    return {'detail': f'Update author {author_id}'}
