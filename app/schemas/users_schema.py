@@ -49,4 +49,3 @@ class OrderSchema(BaseModel):
     subtotal = Number
     shipping = Number
     total = subtotal + shipping
-    
