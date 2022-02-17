@@ -1,6 +1,7 @@
 # DB MODELS
 from db.database import Base
-from sqlalchemy import Column, Integer, String, null
+from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy.orm import relationship
 
 # CREATE MODELS UNDER HERE
 # 
@@ -16,8 +17,22 @@ class User(Base):
     # Optional
     name = Column(String)
     home_address = Column(String)
+    credit_cards = relationship('Credit_Card', back_populates='owner')
 
     def __repr__(self):
-        return f"<User(username={self.username})>"
+        return f'<User(username={self.username})>'
 
-# 
+# CREDIT CARD MODEL
+class Credit_Card(Base):
+    __tablename__ = 'credit_card'
+
+    id = Column(Integer, primary_key = True, index=True)
+    card_number = Column(String, nullable=False)
+    expirate_date = Column(String, nullable=False)
+    ccv = Column(String, nullable=False)
+    card_name = Column(String, nullable=False)
+    owner = relationship('User', back_populates='credit_cards')
+    user_id = Column(Integer, ForeignKey('users.id'))
+
+    def __repr__(self):
+        return f'<Credit_Card( ending in {self.card_number[-4:]})>'

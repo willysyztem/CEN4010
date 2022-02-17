@@ -17,5 +17,7 @@ CALL venv\Scripts\activate.bat
 echo INSTALLING DEPENDENCIES
 pip install -r requirements.txt
 
+cd app
+
 echo RUN UVICORN SERVER
-uvicorn app\main:app --reload
+uvicorn main:app --reload

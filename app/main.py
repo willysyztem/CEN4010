@@ -11,11 +11,12 @@ from db.database import SessionLocal, engine
 # DO NOT DELETE BASE
 from db.models import Base
 Base.metadata.create_all(bind=engine)
+
 # Import the rest of the models under here
-from db.models import User
+from db.models import User, Credit_Card
 
 # Schema
-from schemas.users_schema import UserSchema
+from schemas.user_schema import User_Schema, Credit_Card_Schema
 
 #Gets the Database DONT DELETE
 def get_db():
@@ -44,7 +45,7 @@ def root():
 
 # PROFILE MANAGEMENT
 @app.post('/api/users', status_code=status.HTTP_201_CREATED)
-def create_users(user: UserSchema, db: Session = Depends(get_db)):
+def create_users(user: User_Schema, db: Session = Depends(get_db)):
     new_user = User(
         email_address = user.email,
         password = user.password,
@@ -59,7 +60,6 @@ def create_users(user: UserSchema, db: Session = Depends(get_db)):
         return new_user
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail='User already exists')
-
 
 @app.get('/api/users')
 def get_all_users(db: Session = Depends(get_db)):
@@ -76,7 +76,7 @@ def get_user(username, db: Session = Depends(get_db)):
     return user
 
 @app.put('/api/users/{username}', status_code=status.HTTP_202_ACCEPTED)
-def update_user(username, user: UserSchema, db: Session = Depends(get_db)):
+def update_user(username, user: User_Schema, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == username).update({
         'password': user.password,
         'name': user.name,
@@ -86,3 +86,7 @@ def update_user(username, user: UserSchema, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
     db.commit()
     return {'detail': f'Update user {username}'}
+
+@app.get('/api/user/{username}')
+def create_card(username, credit_card: Credit_Card_Schema, db: Session = Depends(get_db)):
+    return {}
