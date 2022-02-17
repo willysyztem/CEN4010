@@ -1,7 +1,6 @@
 from ctypes import Array
 from datetime import date
 from numbers import Number
-from tokenize import Double
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 from sqlalchemy import Integer

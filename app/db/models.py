@@ -1,9 +1,6 @@
 # DB MODELS
 from ctypes import Array
-from curses.ascii import isblank
 from numbers import Number
-from tokenize import Double
-from turtle import title
 
 from h11 import Data
 from db.database import Base
