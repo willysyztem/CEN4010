@@ -2,9 +2,8 @@
 from ctypes import Array
 from numbers import Number
 
-from h11 import Data
 from db.database import Base
-from sqlalchemy import Column, Integer, String, null
+from sqlalchemy import Column, Date, Integer, String
 
 # CREATE MODELS UNDER HERE
 # 
@@ -28,11 +27,12 @@ class User(Base):
 class Book(Base):
     __tablename__ = 'books'
 
-    isbn =  Column(String, unique = True, nullable = False, primary_key = True)
+    book_id = Column(Integer, unique = True, nullable = False, primary_key = True)
+    isbn =  Column(String, unique = True, nullable = False)
     title = Column(String, nullable = False)
     author_id = Column(Integer, nullable = False)
     publisher = Column(String, nullable = False)
-    publishedDate = Column(Data, nullable = False)
+    publishedDate = Column(Date, nullable = False)
     description = Column(String)
     price = Column(Number, nullable = False)
     copiesSold = Column(Integer, nullable = False)
@@ -47,3 +47,22 @@ class Author(Base):
     publisher = Column(String)
     biography = Column(String)
     books = Column(Array)
+
+# PUBLISHER MODEL
+class Publisher(Base):
+    __tablename__='publishers'
+
+    publisher_id = Column(Integer, nullable=False, unique=True, primary_key=True, index=True)
+    book_id = Column(Integer, unique = True, nullable = False, primary_key=True)
+    country = Column(String)
+
+# ORDERS
+class Orders(Base):
+    __tablename__='orders'
+
+    order_id = Column(Integer, unique = True, nullable = False, primary_key=True, index=True)
+    user_id = Column(Integer, unique = True, nullable = False, primary_key=True)
+    orderDate = Column(Date, nullable=False)
+    subtotal = Column(Number, nullable=False)
+    shipping = Column(Number, nullable=False)
+    

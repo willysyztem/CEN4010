@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, status, HTTPException
-from app.db.models import Author, Book, User
-from app.schemas.users_schema import AuthorSchema, BookSchema, UserSchema
+from app.db.models import Author, Book, User, Publisher, Orders
+from app.schemas.users_schema import AuthorSchema, BookSchema, UserSchema, PublisherSchema, OrderSchema
 
 # Settings For Fast API & DB
 from config.settings import settings
@@ -138,7 +138,7 @@ def get_all_books(db: Session = Depends(get_db)):
 
 @app.get('/api/authors/{author_id}')
 def get_user(author_id, db: Session = Depends(get_db)):
-    author = db.query(Author).filter(author.author_id == author_id).first()
+    author = db.query(Author).filter(Author.author_id == author_id).first()
     if not author:
         raise HTTPException(status.HTTP_404_NOT_FOUND,f'No query found with author: {author_id}')
     return author
@@ -159,3 +159,71 @@ def update_author(author_id, author: AuthorSchema, db: Session = Depends(get_db)
                             f'No query found with author_id: {author_id}')
     db.commit()
     return {'detail': f'Update author {author_id}'}
+
+# ---------------------
+# Publishers
+
+@app.get('/api/publishers')
+def get_all_books(db: Session = Depends(get_db)):
+    publisher = db.query(Publisher).all()
+    if not publisher:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find publishers')
+    return publisher
+
+
+@app.get('/api/publishers/{publisher_id}')
+def get_user(publisher_id, db: Session = Depends(get_db)):
+    publisher = db.query(Publisher).filter(Publisher.publisher_id == publisher_id).first()
+    if not publisher:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,f'No query found with publisher: {publisher_id}')
+    return publisher
+
+
+@app.put('/api/publishers/{publisher_id}', status_code=status.HTTP_202_ACCEPTED)
+def update_publisher(publisher_id, publisher: PublisherSchema, db: Session = Depends(get_db)):
+    publisher = db.query(Publisher).filter(Publisher.publisher_id == publisher_id).update({
+        'publisher_id': publisher.publisher_id,
+        'book_id': publisher.book_id,
+        'country': publisher.country
+    })
+    if not publisher:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,
+                            f'No query found with publisher_id: {publisher_id}')
+    db.commit()
+    return {'detail': f'Update publisher {publisher_id}'}
+
+# ---------------------
+# Orders
+
+@app.get('/api/orders')
+def get_all_books(db: Session = Depends(get_db)):
+    order = db.query(Orders).all()
+    if not order:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find orders')
+    return order
+
+
+@app.get('/api/orders/{order_id}')
+def get_user(order_id, db: Session = Depends(get_db)):
+    order = db.query(Orders).filter(Orders.order_id == order_id).first()
+    if not order:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,f'No query found with order: {order_id}')
+    return order
+
+
+@app.put('/api/orders/{order_id}', status_code=status.HTTP_202_ACCEPTED)
+def update_order(order_id, order: OrderSchema, db: Session = Depends(get_db)):
+    order = db.query(Orders).filter(Orders.order_id == order_id).update({
+        'order_id': order.order_id,
+        'user_id': order.user_id,
+        'orderDate': order.orderDate,
+        'subtotal': order.subtotal,
+        'shipping': order.shipping,
+        'total': order.total
+    })
+    if not order:
+        raise HTTPException(status.HTTP_404_NOT_FOUND,
+                            f'No query found with order_id: {order_id}')
+    db.commit()
+    return {'detail': f'Update order {order_id}'}
+    

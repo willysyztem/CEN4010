@@ -1,9 +1,8 @@
 from ctypes import Array
-from datetime import date
 from numbers import Number
 from typing import Optional
 from pydantic import BaseModel, EmailStr
-from sqlalchemy import Integer
+from sqlalchemy import Integer, Date
 
 class UserSchema(BaseModel):
     email: EmailStr
@@ -18,7 +17,7 @@ class BookSchema(BaseModel):
     title = str
     author_id = Integer
     publisher = str
-    publishedDate = date
+    publishedDate = Date
     price = Number
     copiesSold = Integer
 
@@ -35,4 +34,19 @@ class AuthorSchema(BaseModel):
     publisher = str
     biography = str
     books = Array
+    
+class PublisherSchema(BaseModel):
+    publisher_id = Integer
+    book_id = Integer
+
+    # Optional
+    country = str
+
+class OrderSchema(BaseModel):
+    order_id = Integer
+    user_id = Integer
+    orderDate = Date
+    subtotal = Number
+    shipping = Number
+    total = subtotal + shipping
     
