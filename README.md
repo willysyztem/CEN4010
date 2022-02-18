@@ -45,7 +45,7 @@ API Actions
 - ✅ Create a User with username(email), password, and optional fields (name, email address, home address)
 - ✅ Retrieve a User Object and its fields by their username
 - ✅ Update the user and any of their fields except for email
-- Create a Credit Card that belongs to a User and Retrieve a list of cards for that user
+- ✅ Create a Credit Card that belongs to a User and Retrieve a list of cards for that user
 
 **Feature 3: Shopping Cart**
 
@@ -78,10 +78,10 @@ API Actions
 
 API Actions
 
-- Must be able to create a wishlist of books that belongs to a user and has a unique name
+- ✅ Must be able to create a wishlist of books that belongs to a user and has a unique name
 - Must be able to add a book to a user’s wishlist
 - Must be able to remove a book from a user’s wishlist into the user’s shopping cart
-- Must be able to list the book’s in a user’s wishlist
+- ✅ Must be able to list the book’s in a user’s wishlist
 
 ## Installation
 
