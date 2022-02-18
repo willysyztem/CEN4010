@@ -3,7 +3,6 @@ class Settings():
     PROJECT_VERSION: str = '0.1.0'
 
     # postgres settings
-
     POSTGRES_LOCAL: bool = True
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str

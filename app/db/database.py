@@ -17,3 +17,10 @@ SessionLocal = sessionmaker(bind=engine, autocommit=False, autoflush=False)
 # DB BASE
 Base = declarative_base()
 
+#Gets the Database DONT DELETE
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
