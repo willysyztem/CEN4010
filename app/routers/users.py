@@ -58,8 +58,11 @@ def update_user(username, user: schemas.User, db: Session = Depends(get_db), use
     db.commit()
     return {'detail': f'Update user {username}'}
 
-@router.delete('/', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/')
 def delete_user(username, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    db.query(models.User).filter(models.User.username == username).delete()
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if not user:
+        raise HTTPException(status.HTTP_204_NO_CONTENT, f'No query found with username: {username}')
+    db.delete(user)
     db.commit()
     return {'detail': f'Deleted user {username}'}
