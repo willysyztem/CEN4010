@@ -2,18 +2,32 @@
 
 ## Index
 
+- [Frameworks](https://github.com/willysyztem/CEN4010/tree/profile-management#frameworks)
+- [Contributing](https://github.com/willysyztem/CEN4010/tree/profile-management#contributing)
 - [Installation](https://github.com/willysyztem/CEN4010/tree/profile-management#installation)
   - [Windows](https://github.com/willysyztem/CEN4010/tree/profile-management#windows)
   - [Mac](https://github.com/willysyztem/CEN4010/tree/profile-management#mac)
 - [Documentation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
-- [Contributing](https://github.com/willysyztem/CEN4010/tree/profile-management#contributing)
 - [Tests](https://github.com/willysyztem/CEN4010/tree/profile-management#running-tests)
+  - [Get User](https://github.com/willysyztem/CEN4010/tree/profile-management#get-users)
+  - [Create User](https://github.com/willysyztem/CEN4010/tree/profile-management#create-users)
+  - [Delete User](https://github.com/willysyztem/CEN4010/tree/profile-management#delete-users)
+  - [Update User](https://github.com/willysyztem/CEN4010/tree/profile-management#update-users)
 
 ## Frameworks
 
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [PostgresSQL](https://www.postgresql.org/)
 - [SQLAlchemy](https://www.sqlalchemy.org/)
+
+## Contributing
+
+- [@Carlos Valle](https://github.com/cvall91) 
+- [@Richard Tubbs](https://github.com/Kedrik84) 
+- [@Daniel Vetan](https://github.com/danielvetan) 
+- [@James Vega](https://github.com/Jamesondawg) 
+- [@William Valido](https://www.github.com/willysyztem)
+- [@Lucho Varela](https://github.com/LucianoVarela)
 
 ## Features
 
@@ -229,15 +243,6 @@ the API
 
 add authentication to your API add the end of the API functions
 using `Depends(oauth2.get_current_user)`
-
-## Contributing
-
-- [@Carlos Valle](https://github.com/cvall91) 
-- [@Richard Tubbs](https://github.com/Kedrik84) 
-- [@Daniel Vetan](https://github.com/danielvetan) 
-- [@James Vega](https://github.com/Jamesondawg) 
-- [@William Valido](https://www.github.com/willysyztem)
-- [@Lucho Varela](https://github.com/LucianoVarela)
 
 
 ## Running Tests
