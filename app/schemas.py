@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr
 
@@ -27,14 +28,30 @@ class ShowUser(BaseModel):
     email: EmailStr
     name: str
     home_address: str
+    created_at: datetime
 
     class Config:
         orm_mode = True
 
-
+# Credit Card Schemas
 class CreditCard(BaseModel):
     card_number: str
     owner_username: EmailStr
+
+    class Config:
+        orm_mode = True
+
+# Wish List Schema
+class WishList(BaseModel):
+    name: str
+    books: str
+
+class ShowWishList(BaseModel):
+    id: int
+    name: str
+    books: str
+    owner_username: EmailStr
+    created_at: datetime
 
     class Config:
         orm_mode = True

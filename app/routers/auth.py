@@ -1,4 +1,3 @@
-from os import access
 from fastapi import Depends, status, HTTPException, APIRouter, Response
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 

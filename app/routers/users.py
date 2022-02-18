@@ -13,18 +13,18 @@ router = APIRouter(
 )
 
 @router.post('/', status_code=status.HTTP_201_CREATED, response_model=schemas.ShowUser)
-def create_users(user: schemas.User, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    #hash the password
-    hashed_password = utils.hash(user.password)
-
-    new_user = models.User(
-        email = user.email,
-        password = hashed_password,
-        username = user.email,
-        name = user.name,
-        home_address = user.home_address
-    )   
+def create_users(user: schemas.User, db: Session = Depends(get_db)): 
     try:
+        #hash the password
+        hashed_password = utils.hash(user.password)
+
+        new_user = models.User(
+            email = user.email,
+            password = hashed_password,
+            username = user.email,
+            name = user.name,
+            home_address = user.home_address
+        )  
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
