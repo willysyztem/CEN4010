@@ -175,17 +175,13 @@ ex:
 
 `@router.get()`
 
-**models.py**
-
-Here you will introduce a new model that will be sent over to the Database. 
-
-If you need to recreate another model for the Database, copy the `User` model already created and 
-modify it to your needs. For extra help use [sqlalchemy](https://docs.sqlalchemy.org/en/14/orm/tutorial.html#create-a-schema) docs
-
 **schemas.py**
 
 Here you will introduce a new schema that is going to be used to validate data that is sent or shown
 in the API
+
+If you need to recreate another model for the Database, copy the `User` model already created and 
+modify it to your needs. For extra help use [sqlalchemy](https://docs.sqlalchemy.org/en/14/orm/tutorial.html#create-a-schema) docs
 
 **utils.py**
 
