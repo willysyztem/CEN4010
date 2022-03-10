@@ -7,11 +7,11 @@ from config.settings import settings
 from db.database import engine
 
 # The code blows creates the tables from models
-from models import Base
+from models.base import Base
 Base.metadata.create_all(bind=engine)
 
 # Import all routers (apis)
-from routers import auth, credit_cards, users, wishlist
+from routers import auth, creditcards, users, wishlist, books
 
 
 #Boilerplate stuff for fastapi
@@ -21,9 +21,10 @@ def start_app():
         version=settings.PROJECT_VERSION
     )
     app.include_router(auth.router)
-    app.include_router(credit_cards.router)
+    app.include_router(creditcards.router)
     app.include_router(users.router)
     app.include_router(wishlist.router)
+    app.include_router(books.router)
     return app
 
 app = start_app()

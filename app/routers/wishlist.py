@@ -5,7 +5,8 @@ from typing import List
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models, schemas, oauth2
+import models.wishlist as models, schemas.wishlist as schemas
+import utils, oauth2
 
 router = APIRouter(
     prefix = '/api/wishlist',

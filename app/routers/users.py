@@ -1,3 +1,4 @@
+from turtle import update
 from fastapi import Depends, status, HTTPException, APIRouter
 
 from typing import List
@@ -5,7 +6,8 @@ from typing import List
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models, schemas, utils, oauth2
+import models.users as models, schemas.users as schemas
+import utils, oauth2
 
 router = APIRouter(
     prefix = '/api/users',
@@ -48,12 +50,12 @@ def get_user(username, db: Session = Depends(get_db), user_id: int = Depends(oau
 
 @router.put('/{username}', status_code=status.HTTP_202_ACCEPTED)
 def update_user(username, user: schemas.User, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    user = db.query(models.User).filter(models.User.username == username).update({
+    updated_user = db.query(models.User).filter(models.User.username == username).update({
         'password': user.password,
         'name': user.name,
         'home_address': user.home_address
     })
-    if not user:
+    if not updated_user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
     db.commit()
     return {'detail': f'Update user {username}'}

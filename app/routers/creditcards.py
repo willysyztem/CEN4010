@@ -1,11 +1,10 @@
 from fastapi import Depends, status, HTTPException, APIRouter
 
-from typing import List
-
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models, schemas, oauth2
+import models.creditcards as models, schemas.creditcards as schemas
+import utils, oauth2
 
 router = APIRouter(
     prefix = '/api/creditcard',
