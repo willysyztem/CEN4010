@@ -12,7 +12,7 @@ class User(Base):
     name = Column(String)
     home_address = Column(String)
 
-    shopping_cart = relationship('ShoppingCart', back_populates='user')
+    shopping_cart = relationship('Shoppingcart', back_populates='user')
 
     credit_cards = relationship('CreditCard', back_populates='owner')
     wish_list = relationship('WishList', back_populates='owner')
