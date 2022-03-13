@@ -11,7 +11,7 @@ from models.base import Base
 Base.metadata.create_all(bind=engine)
 
 # Import all routers (apis)
-from routers import auth, creditcards, users, wishlist, books
+from routers import auth, creditcards, users, wishlist, books, author, order, publisher, shoppingcart
 
 
 #Boilerplate stuff for fastapi
@@ -25,6 +25,10 @@ def start_app():
     app.include_router(users.router)
     app.include_router(wishlist.router)
     app.include_router(books.router)
+    app.include_router(authors.router)
+    app.include_router(order.router)
+    app.include_router(publisher.router)
+    app.include_router(shoppingcart.router)
     return app
 
 app = start_app()

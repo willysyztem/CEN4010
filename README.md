@@ -79,7 +79,7 @@ API Actions
 API Actions
 
 - ✅ Must be able to create a wishlist of books that belongs to a user and has a unique name
-- Must be able to add a book to a user’s wishlist
+- ✅ Must be able to add a book to a user’s wishlist
 - Must be able to remove a book from a user’s wishlist into the user’s shopping cart
 - ✅ Must be able to list the book’s in a user’s wishlist
 
@@ -243,15 +243,3 @@ the API
 
 add authentication to your API add the end of the API functions
 using `Depends(oauth2.get_current_user)`
-
-
-## Running Tests
-Make sure you are **logged in** (authenticated)
-### Get Users
-![](https://i.ibb.co/M8rpSFW/get-all-users.gif)
-### Create Users
-![](https://i.ibb.co/P5gFBwh/create-user.gif)
-### Delete Users
-![](https://i.ibb.co/wzNBPGy/delete-user.gif)
-### Update Users
-![](https://i.ibb.co/0YcFmh8/update-user.gif)
