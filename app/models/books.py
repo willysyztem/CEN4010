@@ -1,6 +1,7 @@
 # DB MODELS
 from models.base import Base
 from sqlalchemy import Column, Integer, String, Integer, Date, Float
+from sqlalchemy.orm import relationship
     
 class Book(Base):
     __tablename__ = 'books'
@@ -14,3 +15,5 @@ class Book(Base):
     description = Column(String)
     price = Column(Float, nullable = False)
     copiesSold = Column(Integer, nullable = False)
+
+    shoppingcart = relationship('shoppingcart', back_populates='books')
