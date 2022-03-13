@@ -1,3 +1,4 @@
+from app.routers.vote import vote
 from fastapi import FastAPI
 
 # Settings For Fast API & DB
@@ -11,7 +12,7 @@ from models import Base
 Base.metadata.create_all(bind=engine)
 
 # Import all routers (apis)
-from routers import auth, credit_cards, users, wishlist
+from routers import auth, credit_cards, users, wishlist, vote
 
 
 #Boilerplate stuff for fastapi
@@ -24,6 +25,7 @@ def start_app():
     app.include_router(credit_cards.router)
     app.include_router(users.router)
     app.include_router(wishlist.router)
+    app.include_router(vote.router)
     return app
 
 app = start_app()

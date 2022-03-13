@@ -55,3 +55,14 @@ class ShowWishList(BaseModel):
 
     class Config:
         orm_mode = True
+
+class PostOut(BaseModel):
+    Post: Post
+    ratings: int
+
+    class Config:
+        orm_mode = True
+
+class Rate(BaseModel):
+    post_id: int
+    dir: conint(le=1)
