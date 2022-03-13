@@ -10,7 +10,7 @@ import utils
 
 router = APIRouter(
     prefix = '/api/shoppingcart',
-    tags=['Sopping Cart Management']
+    tags=['Shopping Cart Management']
 )
 
 @router.post('/{username}')
