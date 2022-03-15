@@ -1,9 +1,9 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 # Credit Card Schemas
-class CreditCard(BaseModel):
+class CreditCards(BaseModel):
     card_number: str
-    owner_username: EmailStr
+    user_id: int
 
     class Config:
         orm_mode = True

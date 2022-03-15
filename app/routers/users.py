@@ -6,7 +6,9 @@ from typing import List
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models.users as models, schemas.users as schemas
+import models.users as model
+import schemas.users as schema
+
 import utils, oauth2
 
 router = APIRouter(
@@ -14,13 +16,13 @@ router = APIRouter(
     tags=['Profile Management']
 )
 
-@router.post('/', status_code=status.HTTP_201_CREATED, response_model=schemas.ShowUser)
-def create_users(user: schemas.User, db: Session = Depends(get_db)): 
+@router.post('/', status_code=status.HTTP_201_CREATED, response_model=schema.ShowUser)
+def create_users(user: schema.Users, db: Session = Depends(get_db)): 
     try:
         #hash the password
         hashed_password = utils.hash(user.password)
 
-        new_user = models.User(
+        new_user = model.Users(
             email = user.email,
             password = hashed_password,
             username = user.email,
@@ -34,23 +36,23 @@ def create_users(user: schemas.User, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail='User already exists')
 
-@router.get('/',  response_model=List[schemas.ShowUser])
-def get_all_users(db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    users = db.query(models.User).all()
+@router.get('/',  response_model=List[schema.ShowUser])
+def get_all_users(db: Session = Depends(get_db), current_user_id: int = Depends(oauth2.get_current_user)):
+    users = db.query(model.Users).all()
     if not users:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find users')
     return users
 
-@router.get('/{username}', response_model=schemas.ShowUser)
-def get_user(username, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    user = db.query(models.User).filter(models.User.username == username).first()
+@router.get('/{username}', response_model=schema.ShowUser)
+def get_user(username, db: Session = Depends(get_db), current_user_id: int = Depends(oauth2.get_current_user)):
+    user = db.query(model.Users).filter(model.Users.username == username).first()
     if not user:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
     return user
 
 @router.put('/{username}', status_code=status.HTTP_202_ACCEPTED)
-def update_user(username, user: schemas.User, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    updated_user = db.query(models.User).filter(models.User.username == username).update({
+def update_user(username, user: schema.Users, db: Session = Depends(get_db), current_user_id: int = Depends(oauth2.get_current_user)):
+    updated_user = db.query(model.Users).filter(model.Users.username == username).update({
         'password': user.password,
         'name': user.name,
         'home_address': user.home_address
@@ -61,8 +63,8 @@ def update_user(username, user: schemas.User, db: Session = Depends(get_db), use
     return {'detail': f'Update user {username}'}
 
 @router.delete('/')
-def delete_user(username, db: Session = Depends(get_db), user_id: int = Depends(oauth2.get_current_user)):
-    user = db.query(models.User).filter(models.User.username == username).first()
+def delete_user(username, db: Session = Depends(get_db), current_user_id: int = Depends(oauth2.get_current_user)):
+    user = db.query(model.Users).filter(model.Users.username == username).first()
     if not user:
         raise HTTPException(status.HTTP_204_NO_CONTENT, f'No query found with username: {username}')
     db.delete(user)

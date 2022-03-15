@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
 # Wish List Schema
 class WishList(BaseModel):
@@ -9,7 +9,4 @@ class ShowWishList(BaseModel):
     id: int
     name: str
     books: str
-    owner_username: EmailStr
-
-    class Config:
-        orm_mode = True
+    user_id: int

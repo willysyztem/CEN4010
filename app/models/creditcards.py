@@ -4,11 +4,11 @@ from sqlalchemy import Column, ForeignKey,  Integer, String
 from sqlalchemy.orm import relationship
 
 
-class CreditCard(Base):
-    __tablename__ = 'credit_cards'
+class CreditCards(Base):
+    __tablename__ = __name__.lower()
 
     id = Column(Integer, primary_key = True, index=True)
     card_number = Column(String, nullable=False, unique=True)
 
-    owner_username = Column(String, ForeignKey('users.username', ondelete='CASCADE'), nullable=False)
-    owner = relationship('User', back_populates='credit_cards')
+    user_id = Column(String, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    user = relationship('User', back_populates='creditcards')

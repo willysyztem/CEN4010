@@ -7,7 +7,7 @@ class UserLogin(BaseModel):
     password: str
 
 # User Schemas
-class User(BaseModel):
+class Users(BaseModel):
     email: EmailStr
     password: str
     name: Optional[str]

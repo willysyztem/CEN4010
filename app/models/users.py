@@ -2,8 +2,8 @@ from models.base import Base
 from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
-class User(Base):
-    __tablename__ = 'users'
+class Users(Base):
+    __tablename__ = __name__.lower()
 
     id = Column(Integer, primary_key = True, index=True)
     email = Column(String, nullable=False, unique=True)
@@ -12,7 +12,7 @@ class User(Base):
     name = Column(String)
     home_address = Column(String)
 
-    shopping_cart = relationship('Shoppingcart', back_populates='user')
-
-    credit_cards = relationship('CreditCard', back_populates='owner')
-    wish_list = relationship('WishList', back_populates='owner')
+    # Relationships
+    shoppingcart = relationship('ShoppingCart', back_populates='user')
+    creditcards = relationship('CreditCards', back_populates='user')
+    wishlist = relationship('WishList', back_populates='user')

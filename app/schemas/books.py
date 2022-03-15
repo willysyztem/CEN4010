@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 # Book Schema
-class BookSchema(BaseModel):
+class Books(BaseModel):
     isbn: str
     title: str
     author_id: int

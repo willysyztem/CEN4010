@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from models import books
-class Author(BaseModel):
+
+class Authors(BaseModel):
     id = int
     firstName = str
     lastName = str
@@ -8,5 +9,5 @@ class Author(BaseModel):
     # Optional
     publisher = str
     biography = str
-    books = books
+    # books = books
     publisher_id = int
