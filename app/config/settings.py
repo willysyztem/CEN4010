@@ -14,10 +14,10 @@ class Settings():
     # Set to False to use the one made on heroku
     if POSTGRES_LOCAL:
         # Change settings for your local db
-        POSTGRES_USER = 'postgres'
-        POSTGRES_PASSWORD = '1234'
+        POSTGRES_USER = 'meta'
+        POSTGRES_PASSWORD = ''
         POSTGRES_SERVER = 'localhost'
-        POSTGRES_DB = 'bookstore_db'
+        POSTGRES_DB = 'bookstore'
     else:
         # DO NOT CHANGE THIS SETTINGS
         POSTGRES_USER = 'bdxhjdcqyfiqgn'
