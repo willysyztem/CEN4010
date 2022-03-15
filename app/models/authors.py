@@ -1,6 +1,6 @@
 # DB MODELS
 from models.base import Base
-from sqlalchemy import Column, Integer, String, Integer, Date, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, Integer, Date, Float
 from sqlalchemy.orm import relationship
 
 class Authors(Base):
@@ -10,6 +10,6 @@ class Authors(Base):
     firstName = Column(String, nullable=False)
     lastName = Column(String, nullable=False)
     biography = Column(String)
+    publisher_id = Column(Integer, ForeignKey('publisher.id'), nullable=True)
 
-    books = relationship('books', back_populates='author')
-    publisher_id =relationship('publisher', back_populates='author')
+    publisher = relationship('publisher', back_populates='author')
