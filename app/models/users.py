@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, Integer
 from sqlalchemy.orm import relationship
 
 class Users(Base):
-    __tablename__ = __name__.lower()
+    __tablename__ = 'users'
 
     id = Column(Integer, primary_key = True, index=True)
     email = Column(String, nullable=False, unique=True)

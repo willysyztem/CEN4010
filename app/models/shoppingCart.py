@@ -3,7 +3,7 @@ from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 
 class ShoppingCart(Base):
-    __tablename__ = __name__.lower()
+    __tablename__ = 'shoppingcart'
 
     id = Column(Integer, primary_key = True, index=True)
 

@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Integer, Date, Float
 from sqlalchemy.orm import relationship
     
 class Books(Base):
-    __tablename__ = __name__.lower()
+    __tablename__ = 'books'
 
     id = Column(Integer, unique = True, nullable = False, primary_key = True)
     isbn =  Column(String, unique = True, nullable = False)

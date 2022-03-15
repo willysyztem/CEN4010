@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Integer, Date, Float
 from sqlalchemy.orm import relationship
 
 class Authors(Base):
-    __tablename__ = __name__.lower()
+    __tablename__ = 'authors'
 
     id = Column(Integer, nullable=False, unique=True, primary_key=True, index=True)
     firstName = Column(String, nullable=False)
