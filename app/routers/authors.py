@@ -18,11 +18,11 @@ router = APIRouter(
 def create_author(author: schema.Authors, db: Session = Depends(get_db)):
     try:
         new_author = model.Authors(
+            id = author.id,
             firstName=author.firstName,
             lastName=author.lastName,
-            publisher=author.publisher,
-            # books=author.books,
-            biography=author.biography
+            biography=author.biography,
+            publisher_id = author.publisher_id
         )
         db.add(new_author)
         db.commit()

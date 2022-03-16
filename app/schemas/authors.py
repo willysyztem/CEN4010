@@ -7,7 +7,5 @@ class Authors(BaseModel):
     lastName = str
 
     # Optional
-    publisher = str
-    biography = str
-    # books = books
     publisher_id = int
+    biography = str
