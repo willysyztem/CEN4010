@@ -1,6 +1,6 @@
 # DB MODELS
-from models.base import Base
-from sqlalchemy import Column, ForeignKey, Integer, String, Integer, Date, Float
+from base import Base
+from sqlalchemy import Column, ForeignKey, Integer, String, Date, Float
 from sqlalchemy.orm import relationship
 
 class Authors(Base):
@@ -13,3 +13,12 @@ class Authors(Base):
     publisher_id = Column(Integer, ForeignKey('publisher.id'), nullable=True)
 
     publisher = relationship('publisher', back_populates='author')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "firstName":self.firstName,
+            "lastName":self.lastName,
+            "biography":self.biography,
+            "publisher_id": self.publisher_id
+        }

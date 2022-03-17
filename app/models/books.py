@@ -18,3 +18,17 @@ class Books(Base):
     copiesSold = Column(Integer, nullable = False)
 
     author = relationship('author', back_populates='books')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "isbn":self.isbn,
+            "title":self.title,
+            "author_id":self.author_id,
+            "publisher_id":self.publisher_id,
+            "publishedDate": self.publishedDate,
+            "description":self.description,
+            "price":self.price,
+            "copiesSold":self.copiesSold,
+            "author":self.author
+        }

@@ -12,3 +12,11 @@ class CreditCards(Base):
 
     user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     user = relationship('User', back_populates='creditcards')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "card_number":self.card_number,
+            "user_id":self.user_id,
+            "user":self.user
+        }

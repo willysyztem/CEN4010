@@ -13,3 +13,12 @@ class ShoppingCart(Base):
     
     user = relationship('User', back_populates='ShoppingCart')
     cartItem = relationship('cartItem', back_populates='ShoppingCart')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "user_id":self.user_id,
+            "cart_item_id":self.cart_item_id,
+            "user":self.user,
+            "cartItem": self.cartItem
+        }

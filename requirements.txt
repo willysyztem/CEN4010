@@ -14,5 +14,10 @@ passlib[bcrypt]
 
 # for authentication
 python-jose[cryptography]
+
 # for authentication - forms
-python-multipart 
+python-multipart
+
+#testing
+pytest
+Flask

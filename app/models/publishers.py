@@ -10,4 +10,9 @@ class Publishers(Base):
     company_name = Column(String, nullable=False)
     country = Column(String)
     
-    
+    def to_json(self):
+        return {
+            "id":self.id,
+            "company_name":self.company_name,
+            "country":self.country
+        }
