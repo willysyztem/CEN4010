@@ -14,13 +14,13 @@ import oauth2
 MAX_ALLOWED_WISHLIST = 3
 
 router = APIRouter(
-    prefix='/api/wishlist',
-    tags=['Wish List Management']
+    prefix='/api/cartItem',
+    tags=['cartItem']
 )
 
 
 @router.post('/{cart_id}')
-def create_wish_list(cart_id, new_cart_item: schema.cartItem, db: Session = Depends(get_db)):
+def create_cart_item(cart_id, new_cart_item: schema.cartItem, db: Session = Depends(get_db)):
     try:
         cart_item = model.cartItem(
             id=new_cart_item.id,
