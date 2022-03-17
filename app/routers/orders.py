@@ -44,19 +44,6 @@ def get_order(order_id, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with order id: {newOrder}')
     return newOrder
 
-# @router.put('/{order_id}', status_code=status.HTTP_202_ACCEPTED)
-# def update_order(order_id, user: schema.User, db: Session = Depends(get_db)):
-#     order = db.query(model.Orders).filter(model.Orders.id == order_id).update({
-#         'id': order.id,
-#         'userId': order.userId,
-#         'orderDate': order.orderDate,
-#         'subtotal': order.subtotal,
-#         'shipping': order.shipping
-#     })
-#     if not order:
-#         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with order: {order_id}')
-#     db.commit()
-#     return {'detail': f'Update user {order}'}
 
 @router.delete('/')
 def delete_order(order_id, db: Session = Depends(get_db)):

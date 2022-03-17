@@ -9,6 +9,5 @@ class Publishers(Base):
     id = Column(Integer, nullable=False, unique=True, primary_key=True, index=True)
     company_name = Column(String, nullable=False)
     country = Column(String)
-
     
-    book_id = relationship('books', back_populates='publisher')
+    

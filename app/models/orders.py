@@ -1,6 +1,6 @@
 # DB MODELS
 from models.base import Base
-from sqlalchemy import Column, Integer, String, Integer, Date, Float
+from sqlalchemy import Column, ForeignKey, Integer, String, Integer, Date, Float
 from sqlalchemy.orm import relationship
 
 class Orders(Base):
@@ -10,6 +10,6 @@ class Orders(Base):
     orderDate = Column(Date, nullable=False)
     subtotal = Column(Integer, nullable=False)
     shipping = Column(Integer, nullable=False)
-
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     
-    user_id = relationship('users', back_populates='order')
+    user = relationship('users', back_populates='order')
