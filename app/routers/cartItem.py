@@ -15,7 +15,7 @@ MAX_ALLOWED_WISHLIST = 3
 
 router = APIRouter(
     prefix='/api/cartItem',
-    tags=['CartItem']
+    tags=['cartItem']
 )
 
 
