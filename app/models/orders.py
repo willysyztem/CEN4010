@@ -13,3 +13,13 @@ class Orders(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     
     user = relationship('users', back_populates='order')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "orderDate":self.orderDate,
+            "subtotal":self.subtotal,
+            "shipping":self.shipping,
+            "user_id": self.user_id,
+            "user": self.user
+        }

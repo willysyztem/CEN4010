@@ -16,3 +16,16 @@ class Users(Base):
     shoppingcart = relationship('ShoppingCart', back_populates='user')
     creditcards = relationship('CreditCards', back_populates='user')
     wishlist = relationship('WishList', back_populates='user')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "email":self.email,
+            "password":self.password,
+            "username":self.username,
+            "name": self.name,
+            "home_address": self.home_address,
+            "shoppingcart":self.shoppingcart,
+            "creditcards": self.creditcards,
+            "wishlist": self.wishlist
+        }

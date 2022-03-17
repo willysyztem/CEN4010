@@ -10,3 +10,11 @@ class WishList(Base):
     user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     
     user = relationship('User', back_populates='wishlist', )
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "user_id":self.user_id,
+            "user":self.user
+        }

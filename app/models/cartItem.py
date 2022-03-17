@@ -13,3 +13,13 @@ class cartItem(Base):
 
     shoppingcart = relationship('shoppingcart', back_populates='cartItem')
     books = relationship('books', back_populates='cartItem')
+
+    def to_json(self):
+        return {
+            "id":self.id,
+            "shoppingcart_id":self.shoppingcart_id,
+            "book_id":self.book_id,
+            "book_title": self.book_title,
+            "shoppingcart":self.shoppingcart,
+            "books": self.books,
+        }
