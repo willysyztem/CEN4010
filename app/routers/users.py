@@ -1,4 +1,3 @@
-from turtle import update
 from fastapi import Depends, status, HTTPException, APIRouter
 
 from typing import List
