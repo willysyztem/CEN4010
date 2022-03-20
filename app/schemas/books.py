@@ -12,3 +12,6 @@ class Books(BaseModel):
     publishedDate: date 
     price: float
     copiesSold: int
+    genre : str
+    rating : int
+    
