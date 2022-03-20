@@ -1,5 +1,4 @@
 # DB MODELS
-from app.models.cartItem import cartItem
 from models.base import Base
 from sqlalchemy import Column, ForeignKey, Integer, String, Integer, Date, Float
 from sqlalchemy.orm import relationship
@@ -16,5 +15,7 @@ class Books(Base):
     description = Column(String)
     price = Column(Float, nullable = False)
     copiesSold = Column(Integer, nullable = False)
+    genre = Column(String, nullable = False)
+    rating = Column(Integer, nullable = False)
 
     author = relationship('author', back_populates='books')

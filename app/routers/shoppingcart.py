@@ -5,7 +5,7 @@ from typing import List
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models.shoppingcart as models, schemas.shoppingcart as cartSchema
+import models.shoppingCart as models, schemas.shoppingcart as cartSchema
 import utils
 
 router = APIRouter(
