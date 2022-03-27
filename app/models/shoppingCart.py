@@ -1,4 +1,3 @@
-from tkinter.tix import Tree
 from models.base import Base
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship

@@ -10,5 +10,5 @@ class WishList(Base):
     owner_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
     
     # Relationships
-    owner = relationship('Users', back_populates='wishlist')
-    wishitems = relationship('WishItems', back_populates='wishlist')
+    owner = relationship('Users', back_populates='wishlist', cascade='delete')
+    wishitems = relationship('WishItems', back_populates='wishlist', cascade='delete')

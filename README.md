@@ -51,19 +51,19 @@ API Actions
 
 API Actions
 
-- Create a shopping cart instance for a user. A shopping cart must belong to a user.
-- Update the shopping cart with a book.
-- Retrieve the list of book(s) in the shopping cart.
-- Delete a book from the shopping cart instance for that user
+- ✅ Create a shopping cart instance for a user. A shopping cart must belong to a user.
+- ✅ Update the shopping cart with a book.
+- ✅ Retrieve the list of book(s) in the shopping cart.
+- ✅ Delete a book from the shopping cart instance for that user
 
 **Feature 4: Book Details**
 
 API Actions
 
 - An administrator must create a book with the book ISBN, book name, book description, price, author, genre, publisher, year published, and copies sold.
-- Must be able to retrieve a book’s details
+- ✅ Must be able to retrieve a book’s details
 - An administrator must be able to create an author with first name, last name, biography, and publisher
-- Must be able to retrieve a list of books associated with an author
+- ✅ Must be able to retrieve a list of books associated with an author
 
 **Feature 5: Book Rating and Commenting**
 
@@ -80,7 +80,7 @@ API Actions
 
 - ✅ Must be able to create a wishlist of books that belongs to a user and has a unique name
 - ✅ Must be able to add a book to a user’s wishlist
-- Must be able to remove a book from a user’s wishlist into the user’s shopping cart
+- ✅ Must be able to remove a book from a user’s wishlist into the user’s shopping cart
 - ✅ Must be able to list the book’s in a user’s wishlist
 
 ## Installation

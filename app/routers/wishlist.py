@@ -49,8 +49,20 @@ def get_wishlist(user_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find wishlist that belongs to user with id: {user_id}')
     return wishlists
 
+@router.delete('/{wishlist_id}')
+def delete_wishlist(wishlist_id, db: Session = Depends(get_db)):
+    try:
+        wishlist = db.query(model.WishList).filter(model.WishList.id == wishlist_id).first()
+        if not wishlist:
+            raise HTTPException(status.HTTP_204_NO_CONTENT, f'No wishlist with id : {wishlist_id}')
+        db.delete(wishlist)
+        db.commit()
+        return {'detail': f'Deleted wishlist {wishlist_id}'}
+    except Exception as e:
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not delete wishlist => {e}')
+
 # WishItems
-@router.post('/wishitems/', status_code = status.HTTP_201_CREATED)
+# @router.post('/wishitems/', status_code = status.HTTP_201_CREATED)
 def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
     try:
         wishitem = models.wishitems.WishItems(
@@ -63,6 +75,15 @@ def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
         return {'detail': f'Cart item created for wishlist with id: {wishitem.wishlist_id}'}
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not create cart item.')
+
+# @router.delete('/wishitems/{wishitem_id}')
+# def delete_wishitem(wishitem_id, db: Session = Depends(get_db)):
+#     wishitem = db.query(models.cartitems.CartItems).filter(models.cartitems.CartItems.id == wishitem_id).first()
+#     if not wishitem:
+#         raise HTTPException(status.HTTP_204_NO_CONTENT, f'No wishitem with id : {wishitem_id}')
+#     db.delete(wishitem)
+#     db.commit()
+#     return {'detail': f'Deleted wishitem {wishitem_id}'}
 
 @router.get('/wishitems/{wishlist_id}')
 def get_all_wishitems_from_wishlist(wishlist_id: int, db: Session = Depends(get_db)):
@@ -86,6 +107,7 @@ def add_wishitem_to_shoppingcart(wishitem_id: int, user_id: int, db: Session = D
         db.add(new_cartitem)
         db.commit()
         db.refresh(new_cartitem)
+        delete_wishitem(wishitem, db)
         return new_cartitem
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not add wishitem to cart item => {e}')
