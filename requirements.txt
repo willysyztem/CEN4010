@@ -8,3 +8,11 @@ pydantic[email]
 # for database management
 sqlalchemy
 psycopg2
+
+# for password hashing
+passlib[bcrypt]
+
+# for authentication
+python-jose[cryptography]
+# for authentication - forms
+python-multipart 

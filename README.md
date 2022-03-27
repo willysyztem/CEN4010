@@ -2,16 +2,32 @@
 
 ## Index
 
-- [Installation](https://github.com/willysyztem/CEN4010/tree/profile-management#installation)
-- [Documenation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
+- [Frameworks](https://github.com/willysyztem/CEN4010/tree/profile-management#frameworks)
 - [Contributing](https://github.com/willysyztem/CEN4010/tree/profile-management#contributing)
+- [Installation](https://github.com/willysyztem/CEN4010/tree/profile-management#installation)
+  - [Windows](https://github.com/willysyztem/CEN4010/tree/profile-management#windows)
+  - [Mac](https://github.com/willysyztem/CEN4010/tree/profile-management#mac)
+- [Documentation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
 - [Tests](https://github.com/willysyztem/CEN4010/tree/profile-management#running-tests)
+  - [Get User](https://github.com/willysyztem/CEN4010/tree/profile-management#get-users)
+  - [Create User](https://github.com/willysyztem/CEN4010/tree/profile-management#create-users)
+  - [Delete User](https://github.com/willysyztem/CEN4010/tree/profile-management#delete-users)
+  - [Update User](https://github.com/willysyztem/CEN4010/tree/profile-management#update-users)
 
 ## Frameworks
 
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [PostgresSQL](https://www.postgresql.org/)
 - [SQLAlchemy](https://www.sqlalchemy.org/)
+
+## Contributing
+
+- [@Carlos Valle](https://github.com/cvall91) 
+- [@Richard Tubbs](https://github.com/Kedrik84) 
+- [@Daniel Vetan](https://github.com/danielvetan) 
+- [@James Vega](https://github.com/Jamesondawg) 
+- [@William Valido](https://www.github.com/willysyztem)
+- [@Lucho Varela](https://github.com/LucianoVarela)
 
 ## Features
 
@@ -26,16 +42,16 @@ API Actions
 
 API Actions
 
-- ✅ Create a User with username(email), password and optional fields (name, email address, home address)
+- ✅ Create a User with username(email), password, and optional fields (name, email address, home address)
 - ✅ Retrieve a User Object and its fields by their username
 - ✅ Update the user and any of their fields except for email
-- Create Credit Card that belongs to a User and Retrieve a list of cards for that user
+- ✅ Create a Credit Card that belongs to a User and Retrieve a list of cards for that user
 
 **Feature 3: Shopping Cart**
 
 API Actions
 
-- Create a shopping cart instance for a user. Shopping cart must belong to a user.
+- Create a shopping cart instance for a user. A shopping cart must belong to a user.
 - Update the shopping cart with a book.
 - Retrieve the list of book(s) in the shopping cart.
 - Delete a book from the shopping cart instance for that user
@@ -44,16 +60,16 @@ API Actions
 
 API Actions
 
-- An administrator must be able to create a book with the book ISBN, book name, book description, price, author, genre, publisher , year published and copies sold.
-- Must be able retrieve a book’s details
-- An administrator must be able to create an author with first name, last name, biography and publisher
-- Must be able to retrieve a list of books associate with an author
+- An administrator must create a book with the book ISBN, book name, book description, price, author, genre, publisher, year published, and copies sold.
+- Must be able to retrieve a book’s details
+- An administrator must be able to create an author with first name, last name, biography, and publisher
+- Must be able to retrieve a list of books associated with an author
 
 **Feature 5: Book Rating and Commenting**
 
 API Actions
 
-- Must be able to create a rating for a book by a user on a 5 star scale with a datestamp
+- Must be able to create a rating for a book by a user on a 5-star scale with a datestamp
 - Must be able to create a comment for a book by a user with a datestamp
 - Must be able to retrieve a list of ratings and comments sorted by highest rating
 - Must be able to retrieve the average rating for a book
@@ -62,20 +78,21 @@ API Actions
 
 API Actions
 
-- Must be able to create a wishlist of books that belongs to user and has a unique name
-- Must be able to add a book to a user’s wishlisht
+- ✅ Must be able to create a wishlist of books that belongs to a user and has a unique name
+- ✅ Must be able to add a book to a user’s wishlist
 - Must be able to remove a book from a user’s wishlist into the user’s shopping cart
-- Must be able to list the book’s in a user’s wishlist
+- ✅ Must be able to list the book’s in a user’s wishlist
 
 ## Installation
 
 Clone the Repo or Download the Zip File from the Repo
+**_setup has been renamed to run_app_**
 
 [ZIP](https://github.com/willysyztem/CEN4010/archive/refs/heads/main.zip) if you are lazy...
 
 ### Windows
 
-For windows user a `setup.bat` has been added which will create your virtual environment for you.
+For windows users, a `run_app.bat` has been added, which will create your virtual environment for you.
 
 ![](https://i.ibb.co/zHDRw8S/setup-gif.gif)
 
@@ -84,21 +101,18 @@ To ensure that everything runs smoothly, please download:
 - The latest [python](https://www.python.org/downloads/release/python-3102/) version
 - The latest [postgreSQL](https://www.postgresql.org/download/windows/) version (windows)
 
-**_Note: DB ISSUES_**
-
-If you are experiencing issues with the `setup.bat` not loading correctly is because you might have not configured your database locally.
-By Default the DB Config is set to
-
-![](https://i.ibb.co/qRWQDW6/code1.png)
-
-This will automatically use the Heroku DB.
-
-## PLEASE USE YOUR LOCAL DB FOR TESTING!
-
 ### MAC
 
-MAC setup file coming soon.
-For now run it on the terminal 👨‍💻
+cd into `CEN4010.`
+
+On the terminal give permission to run_app.sh to run / run run_app.sh (dont forget the dot . )
+
+- `chmod +x run_app.sh`
+- `./run_app.sh`
+
+![](https://i.ibb.co/WPrRNkV/setup-mac-gif.gif)
+
+To use in terminal 👨‍💻
 
 - `cd CEN4010` Go inside project folder
 - `python3 -m venv venv` Create your virtual environment
@@ -107,25 +121,35 @@ For now run it on the terminal 👨‍💻
 - `cd app` Go inside app folder
 - `uvicorn main:app --reload` Run uvicorn server
 
-When uvicorn is online, go to `http://127.0.0.1:8000/docs` on your browser to use SwaggerUI
+When uvicorn is online, go to `http://127.0.0.1:8000/docs` on your browser to use SwaggerUI.
 
 - The latest [python](https://www.python.org/downloads/release/python-3102/) version
 - The latest [postgreSQL](https://www.postgresql.org/download/macosx/) version (mac)
 
+**_Note: Known ISSUES_**
+
+If you are experiencing issues with the `run_app` not loading correctly, you might not have configured your Database locally.
+By Default, the DB Config is set to
+
+![](https://i.ibb.co/qRWQDW6/code1.png)
+
+If the setting is `True` will automatically use the Heroku DB.
+
+**_PLEASE USE YOUR LOCAL DB FOR TESTING!_**
+
 ## Documentation
 
-In here you will find briefly what the folder structure is for our project
+Here you will find briefly what the folder structure is for our project.
 
-![](https://i.ibb.co/5F7Z1Ck/Screen-Shot-2022-02-16-at-2-08-05-PM.png)
+![](https://i.ibb.co/tM9KtKj/Screen-Shot-2022-02-18-at-3-20-28-PM.png)
 
 ### App folder
 
-In the app folder you will find all the components that are needed for our restfulAPI
-self explanatory.
+In the app folder, you will find all the components needed for our restful API self-explanatory.
 
 ### Config folder
 
-In our config folder you will find all the settings needed for our resfulAPI such as
+In our config folder, you will find all the settings needed for our restful API, such as
 
 **FASTAPI SETTINGS**
 
@@ -137,46 +161,85 @@ In our config folder you will find all the settings needed for our resfulAPI suc
 **_CHANGE IF YOU KNOW WHAT IN THE WORLD YOU ARE DOING_**
 
 - `POSTGRES_LOCAL: bool = True` `True` if you want to use local, `False` for Heroku
-- `POSTGRES_USER: str` postgres user most likely your machine name, Heroku is set already
-- `POSTGRES_PASSWORD: str` If you set a local password put it here, Heroku is set already
+- `POSTGRES_USER: str` Postgres user most likely your machine name, Heroku is set already
+- `POSTGRES_PASSWORD: str` If you set a local password, put it here, Heroku is set already
 - `POSTGRES_SERVER: str` Server you created locally, Heroku is set already
-- `POSTGRES_PORT: str = '5432'` Defaul port dont change
-- `POSTGRES_DB: str` Databse you created locally, Heroku is set already
+- `POSTGRES_PORT: str = '5432'` Default port dont change
+- `POSTGRES_DB: str` Database you created locally, Heroku is set already
 
 ### DB folder
 
-In our DB folder you will find our **database.py** and **models.py**
+In our DB folder, you will find our **database.py** and **models.py**
 
 Do not touch **database.py** (skipping)
 
-In **models.py**
+### Router folder
 
-Here you will introduce a new model that is going to be sent over to the database. This is going
-to create a table based on the model.
+In our Routers folder, you will find all the routers created that get added to the API.
 
-If you need to recreate another model for the database copy the `User` model already created and
+Create a `my_router.py` file 
+
+In your router file, you need to create a router using.
+
+`router = APIRouter()`
+
+Instead of using `@app` decorator like in your `main.py` , you will use `@router`
+
+ex:
+
+`@router.get()`
+
+**schemas.py**
+
+Here you will introduce a new schema that is going to be used to validate data that is sent or shown
+in the API
+
+If you need to recreate another model for the Database, copy the `User` model already created and 
 modify it to your needs. For extra help use [sqlalchemy](https://docs.sqlalchemy.org/en/14/orm/tutorial.html#create-a-schema) docs
 
-### Schemas folder
+**utils.py**
 
-In the schemas folder you will find all the schemas that are used in FastAPI that are then
-translated to the models in our db folder.
+Here will be utility functions to use throughout our app
+currently, we have 
 
-### Main.py
+- `hash()` Hashes plain text passwords using bcrypt
+- `verify()` Compares plain text passwords and hashed passwords stored in DB
 
-This is the brains of our backend restfulAPI here you will be adding your API endpoints.
+**oauth2.py**
 
-**_future structuring of the routers will be coming soon, to seperate everyones api call_**
+Open Auth class to create access tokens and verify access tokens
+using jwt token format
 
-## Contributing
+The only thing you need to change here would be the `SECRET_KEY` to
+one shared by the group.
 
-- [@Carlos Valle](https://github.com/cvall91)
-- [@Richard Tubbs](https://github.com/Kedrik84)
-- [@Daniel Vetan](https://github.com/danielvetan)
-- [@James Vega](https://github.com/Jamesondawg)
-- [@William Valido](https://www.github.com/willysyztem)
-- [@Lucho Varela](https://github.com/LucianoVarela)
+for more info on this, read [FastAPI Security](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
 
-## Running Tests
+**main.py**
 
-Coming soon...
+The brains of our restful backend API here will add your API endpoints.
+
+To add your API
+
+import your router
+
+ex: 
+
+`from routers import my_router.py`
+
+and inside our `start_app()` include your router to the `app` object
+
+ex:
+
+`app.inclue_router(my_router.router)`
+
+## Authentication
+
+Authentication has been added to our backend
+meaning that only authorized logged in users can use
+the API
+
+![](https://i.ibb.co/Btm1GXP/authentication.gif)
+
+add authentication to your API add the end of the API functions
+using `Depends(oauth2.get_current_user)`

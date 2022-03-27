@@ -3,7 +3,6 @@ class Settings():
     PROJECT_VERSION: str = '0.1.0'
 
     # postgres settings
-
     POSTGRES_LOCAL: bool = True
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
@@ -18,7 +17,7 @@ class Settings():
         POSTGRES_USER = 'meta'
         POSTGRES_PASSWORD = ''
         POSTGRES_SERVER = 'localhost'
-        POSTGRES_DB = 'bookstore_db'
+        POSTGRES_DB = 'bookstore'
     else:
         # DO NOT CHANGE THIS SETTINGS
         POSTGRES_USER = 'bdxhjdcqyfiqgn'
