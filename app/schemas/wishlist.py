@@ -1,12 +1,19 @@
 from pydantic import BaseModel
 
-# Wish List Schema
+# WishList Schema
 class WishList(BaseModel):
     name: str
-    books: str
 
 class ShowWishList(BaseModel):
     id: int
     name: str
-    books: str
-    user_id: int
+    owner_id: int
+    wishitems: list
+
+    class Config:
+        orm_mode = True
+
+# WishItem Schema
+class WishItem(BaseModel):
+    wishlist_id: int
+    book_id: int

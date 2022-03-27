@@ -1,5 +1,4 @@
-from turtle import back
-from app.models.cartItem import cartItem
+from tkinter.tix import Tree
 from models.base import Base
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
@@ -7,9 +6,9 @@ from sqlalchemy.orm import relationship
 class ShoppingCart(Base):
     __tablename__ = 'shoppingcart'
 
-    id = Column(Integer, primary_key = True, index=True)
-    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
-    cart_item_id = Column(Integer, ForeignKey('cartItem.id'))
+    id = Column(Integer, primary_key=True, index=True)
+    owner_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), nullable=False, unique=True)
     
-    user = relationship('User', back_populates='ShoppingCart')
-    cartItem = relationship('cartItem', back_populates='ShoppingCart')
+    # Relationships
+    owner = relationship('Users', back_populates='shoppingcart')
+    cartitems = relationship('CartItems', back_populates='shoppingcart')

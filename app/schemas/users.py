@@ -7,8 +7,13 @@ class UserLogin(BaseModel):
     password: str
 
 # User Schemas
-class Users(BaseModel):
+class User(BaseModel):
     email: EmailStr
+    password: str
+    name: Optional[str]
+    home_address: Optional[str]
+
+class UpdateUser(BaseModel):
     password: str
     name: Optional[str]
     home_address: Optional[str]
@@ -17,8 +22,8 @@ class ShowUser(BaseModel):
     id: int
     username: EmailStr
     email: EmailStr
-    name: str
-    home_address: str
+    name: Optional[str]
+    home_address: Optional[str]
 
     class Config:
         orm_mode = True

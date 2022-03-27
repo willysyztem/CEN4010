@@ -1,15 +1,18 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel
 
-# Wish List Schema
+# ShoppingCart Schema
 class ShoppingCart(BaseModel):
     id: int
     user_id: int
-    cart_item_id: int
+    cartitems: list = None
 
-class ShowShoppingCart(BaseModel):
-    id: int
-    user_id: int
-    cart_item_id: int
+# CartItem Schema
+class CartItem(BaseModel):
+    book_id: int
+
+class ShowCartItem(BaseModel):
+    shoppingcart_id: int
+    bookd_id: int
 
     class Config:
         orm_mode = True

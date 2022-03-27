@@ -3,12 +3,11 @@ from pydantic import BaseModel
 
 # Book Schema
 class Books(BaseModel):
-    id: int
     isbn: str
     title: str
     author_id: int
     description: str
     publisher_id: int
-    publishedDate: date 
+    published_date: date 
     price: float
-    copiesSold: int
+    copies_sold: int

@@ -17,27 +17,26 @@ router = APIRouter(
 def get_all_books(db: Session = Depends(get_db)):
     book = db.query(model.Books).all()
     if not book:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail='Could not find books')
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find books')
     return book
 
 @router.get('/{isbn}')
-def get_books(isbn, db: Session = Depends(get_db)):
+def get_book(isbn, db: Session = Depends(get_db)):
     book = db.query(model.Books).filter(model.Books.isbn == isbn).first()
     if not book:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')
     return book
 
-@router.put('/{isbn}', status_code=status.HTTP_202_ACCEPTED)
+@router.put('/{isbn}', status_code = status.HTTP_202_ACCEPTED)
 def update_book(isbn, book: schema.Books, db: Session = Depends(get_db)):
     updated_book = db.query(model.Books).filter(model.Books.isbn == isbn).update({
-        'isbn': book.isbn,
-        'title': book.title,
-        'author_id': book.author_id,
-        'description': book.description,
-        'publisher': book.publisher,
-        'publishDate': book.publishedDate,
-        'copiesSold': book.copiesSold,
-        'price': book.price
+        'title' : book.title,
+        'published_date' : book.publisher_id,
+        'description' : book.description,
+        'price' : book.price,
+        'copies_sold' : book.copies_sold,
+        'author_id' : book.author_id,
+        'publisher_id' : book.publisher_id
     })
     if not updated_book:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')

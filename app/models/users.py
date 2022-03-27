@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 class Users(Base):
     __tablename__ = 'users'
 
-    id = Column(Integer, primary_key = True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     email = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
     username = Column(String, unique=True)
@@ -13,6 +13,7 @@ class Users(Base):
     home_address = Column(String)
 
     # Relationships
-    shoppingcart = relationship('ShoppingCart', back_populates='user')
-    creditcards = relationship('CreditCards', back_populates='user')
-    wishlist = relationship('WishList', back_populates='user')
+    order = relationship('Orders', back_populates='owner')
+    shoppingcart = relationship('ShoppingCart', back_populates='owner')
+    creditcards = relationship('CreditCards', back_populates='owner')
+    wishlist = relationship('WishList', back_populates='owner')

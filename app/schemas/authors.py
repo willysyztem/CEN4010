@@ -1,11 +1,8 @@
+from typing import Optional
 from pydantic import BaseModel
-from models import books
 
+# Author Schema
 class Authors(BaseModel):
-    id = int
-    firstName = str
-    lastName = str
-
-    # Optional
-    publisher_id = int
-    biography = str
+    first_name : str
+    last_name : str
+    biography : Optional[str]
