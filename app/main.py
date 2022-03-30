@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from app.routers import bookrating
 
 # Settings For Fast API & DB
 from config.settings import settings
@@ -28,6 +29,7 @@ def start_app():
     app.include_router(shoppingcart.router)
     app.include_router(users.router)
     app.include_router(wishlist.router)
+    app.include_router(bookrating.router)
     return app
 
 app = start_app()
