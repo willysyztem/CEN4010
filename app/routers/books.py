@@ -26,7 +26,7 @@ def get_books(isbn, db: Session = Depends(get_db)):
     if not book:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')
     return book
-
+ 
 @router.put('/{isbn}', status_code=status.HTTP_202_ACCEPTED)
 def update_book(isbn, book: schema.Books, db: Session = Depends(get_db)):
     updated_book = db.query(model.Books).filter(model.Books.isbn == isbn).update({
@@ -34,7 +34,6 @@ def update_book(isbn, book: schema.Books, db: Session = Depends(get_db)):
         'title': book.title,
         'author_id': book.author_id,
         'description': book.description,
-        'publisher': book.publisher,
         'publishDate': book.publishedDate,
         'copiesSold': book.copiesSold,
         'price': book.price
