@@ -3,6 +3,9 @@ from pydantic import BaseModel
 # WishList Schema
 class WishList(BaseModel):
     name: str
+    
+    class Config:
+        orm_mode = True
 
 class ShowWishList(BaseModel):
     id: int
@@ -10,10 +13,8 @@ class ShowWishList(BaseModel):
     owner_id: int
     wishitems: list
 
-    class Config:
-        orm_mode = True
-
 # WishItem Schema
 class WishItem(BaseModel):
+    id: int
     wishlist_id: int
     book_id: int

@@ -1,0 +1,50 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+    <title>{{book.title}}</title>
+{% endblock%}
+
+{% block style %}
+    <style>
+        .bg-section-img {
+            background-image: url("https://covers.openlibrary.org/b/isbn/{{book.isbn}}.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }   
+    </style>
+{% endblock %}
+
+{% block content%}
+    <!-- Book (product page) -->
+    <section class="my-5 p-0">
+        <div class="container-lg bg-section-img">
+            <div class="row blur p-4 justify-content-center">
+                <div class="col-xs-12 col-md-3">
+                    <img class="rounded-3 img-fluid mx-auto d-block"
+                        src="https://covers.openlibrary.org/b/isbn/{{book.isbn}}.jpg" alt="">
+                </div>
+
+                <div class="col-xs-12 col-md-8">
+                    <h1 class="text-white fw-bold">{{book.title}}</h1>
+                    <span class="text-white">Published: {{book.published_date}} • </span>
+                    <span class="text-white">Genre: {genre} • </span>
+                    <span class="text-white">Pages: {pages}</span>
+                    <div class="my-4">
+                        <i class="fa-solid fa-star display-5 text-warning"></i>
+                        <i class="fa-solid fa-star display-5 text-warning"></i>
+                        <i class="fa-solid fa-star display-5 text-warning"></i>
+                        <i class="fa-solid fa-star-half-stroke display-5 text-warning"></i>
+                        <i class="fa-regular fa-star display-5 text-warning"></i>
+                    </div>
+                    <h3 class="text-white">Overview</h3>
+                    <p class="text-white">{{book.description}}</p>
+                    <p class="text-white fw-bold m-0">{{author.first_name}} {{author.last_name}}</p>
+                    <p class="text-white">Author</p>
+                    <p class="text-white fw-bold m-0">{{publisher.company_name}}</p>
+                    <p class="text-white">Publisher</p>
+                    <button type="button" class="btn btn-main">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

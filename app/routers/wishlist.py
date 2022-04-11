@@ -12,8 +12,8 @@ import models.cartitems
 import schemas.wishlist as schema
 
 from routers.shoppingcart import add_cartitem
+from routers.books import get_book_by_id
 
-import utils, oauth2
 
 MAX_ALLOWED_WISHLIST = 3
 
@@ -40,13 +40,13 @@ def create_wishlist(user_id: int, new_wishlist: schema.WishList, db: Session = D
     else:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail='Could not create wish list => Wishlist limit reached!')
 
-@router.get('/{user_id}', response_model = List[schema.ShowWishList])
+@router.get('/{user_id}')
 def get_wishlist(user_id: int, db: Session = Depends(get_db)):
     wishlists = db.query(model.WishList).filter(model.WishList.owner_id == user_id).all()
     for wishlist in wishlists:
-        wishlist.wishitems = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.wishlist_id == wishlist.id).all()
+        wishlist.wishitems = get_all_wishitems_from_wishlist(wishlist.id, db)
     if not wishlists:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find wishlist that belongs to user with id: {user_id}')
+        return {}
     return wishlists
 
 @router.delete('/{wishlist_id}')
@@ -62,7 +62,7 @@ def delete_wishlist(wishlist_id, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not delete wishlist => {e}')
 
 # WishItems
-# @router.post('/wishitems/', status_code = status.HTTP_201_CREATED)
+@router.post('/wishitems/', status_code = status.HTTP_201_CREATED)
 def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
     try:
         wishitem = models.wishitems.WishItems(
@@ -87,14 +87,17 @@ def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
 
 @router.get('/wishitems/{wishlist_id}')
 def get_all_wishitems_from_wishlist(wishlist_id: int, db: Session = Depends(get_db)):
-    wishitem = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.wishlist_id == wishlist_id).all()
-    if not wishitem:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find cart items that belongs to wishlist with id: {wishlist_id}')
-    return wishitem
+    wishitems = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.wishlist_id == wishlist_id).all()
+    for wishitem in wishitems:
+        wishitem.book = get_book_by_id(wishitem.book_id, db)
+    if not wishitems:
+        return []
+    return wishitems
 
-@router.get('/wishitem/{wishitem_id}')
+@router.get('/wishitem/{wishitem_id}', )
 def get_wishitem(wishitem_id: int, db: Session = Depends(get_db)):
     wishitem = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.id == wishitem_id).first()
+    wishitem.book = get_book_by_id(wishitem.book_id, db)
     if not wishitem:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find cart item that belongs to wishlist with id: {wishitem_id}')
     return wishitem
@@ -107,8 +110,6 @@ def add_wishitem_to_shoppingcart(wishitem_id: int, user_id: int, db: Session = D
         db.add(new_cartitem)
         db.commit()
         db.refresh(new_cartitem)
-        delete_wishitem(wishitem, db)
         return new_cartitem
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not add wishitem to cart item => {e}')
-    

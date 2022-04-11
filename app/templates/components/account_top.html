@@ -1,0 +1,12 @@
+<section class="bg-account-default">
+    <div class="container-lg">
+        <div class="row p-5">
+            <div class="col-12 col-md-2">
+                <img src="{{ url_for('static', path='/img/default_avatar.png') }}" alt=""
+                    class="img-fluid img-thumbnail avatar-img">
+            </div>
+            <div class="col-12 col-md-8">
+                <span class="display-6 text-white fw-bold">{{user.username.split("@")[0]}}</span>
+                <span class="text-white">Member since {{user.date_created}}</span>
+            </div>
+</section>
