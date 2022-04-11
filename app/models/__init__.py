@@ -4,7 +4,7 @@ from .cartitems import CartItems
 from .creditcards import CreditCards
 from .orders import Orders
 from .publishers import Publishers
-from .shoppingcart import ShoppingCart
+from .shoppingcart import shoppingCart
 from .users import Users
 from .wishitems import WishItems
 from .wishlist import WishList
