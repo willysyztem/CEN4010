@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Callable, Optional, Iterator, Callable
 
-from fastapi import Depends, status, APIRouter
+from fastapi import Depends, status, APIRouter, Response
 from fastapi.responses import RedirectResponse
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 
@@ -61,3 +61,9 @@ def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
     response = RedirectResponse(url='/index', status_code=status.HTTP_302_FOUND)
     manager.set_cookie(response, access_token)
     return response
+
+@router.get("/logout")
+def logout(response : Response):
+  response = RedirectResponse('/login', status_code= 302)
+  response.delete_cookie(key ='login-bs.cookie')
+  return response

@@ -16,7 +16,7 @@ function register_user() {
     body: JSON.stringify({
       email: _email.value,
       password: _password.value,
-      name: "John Doe",
+      name: _email.value.substring(0, _email.value.indexOf('@')),
       home_address: "Earth",
     }),
     headers: {
@@ -122,4 +122,13 @@ function add_wishitem(_wishlist_id, _book_id) {
   })
     .then((response) => response.json())
     .then((data) => show_snackbar(data.detail));
+}
+
+function delete_wishitem(wishitem_id) {
+  fetch("/api/wishlist/wishitems/" + wishitem_id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(location.reload());
 }
