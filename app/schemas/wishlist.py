@@ -15,6 +15,5 @@ class ShowWishList(BaseModel):
 
 # WishItem Schema
 class WishItem(BaseModel):
-    id: int
     wishlist_id: int
     book_id: int

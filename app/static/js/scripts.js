@@ -128,3 +128,41 @@ function update_user_cc() {
       clear(_creditcard);
     });
 }
+
+function create_wishlist(user_id) {
+  let _wishlist = document.getElementById("newWishlist");
+  fetch("/api/wishlist/" + user_id, {
+    method: "POST",
+    body: JSON.stringify({
+      name: _wishlist.value,
+      owner_id: user_id,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(location.reload());
+}
+
+function delete_wishlist(wishlist_id) {
+  fetch("/api/wishlist/" + wishlist_id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(location.reload());
+}
+
+function add_wishitem(_wishlist_id, _book_id) {
+  fetch("/api/wishlist/wishitems/", {
+    method: "POST",
+    body: JSON.stringify({
+      wishlist_id: _wishlist_id,
+      book_id: _book_id,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => show_snackbar(data.detail));
+}
