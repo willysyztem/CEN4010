@@ -19,9 +19,9 @@
                         <div class="card-body">
                             <a href="" class="text-reset">
                                 {% if book.title|length > 13 %}
-                                    <h5 class="card-title mb-3">{{book.title[0:10] + ('...')}}</h5>
+                                    <a href="/book/{{book.isbn}}" class="card-title mb-3">{{book.title[0:10] + ('...')}}</a>
                                 {% else %}
-                                    <h5 class="card-title mb-3">{{book.title}}</h5>
+                                <a href="/book/{{book.isbn}}" class="card-title mb-3">{{book.title}}</a>
                                 {% endif %}
                             </a>
                             <h6 class="mb-3">${{book.price}}</h6>

@@ -76,14 +76,14 @@ def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not create cart item.')
 
-# @router.delete('/wishitems/{wishitem_id}')
-# def delete_wishitem(wishitem_id, db: Session = Depends(get_db)):
-#     wishitem = db.query(models.cartitems.CartItems).filter(models.cartitems.CartItems.id == wishitem_id).first()
-#     if not wishitem:
-#         raise HTTPException(status.HTTP_204_NO_CONTENT, f'No wishitem with id : {wishitem_id}')
-#     db.delete(wishitem)
-#     db.commit()
-#     return {'detail': f'Deleted wishitem {wishitem_id}'}
+@router.delete('/wishitems/{wishitem_id}')
+def delete_wishitem(wishitem_id, db: Session = Depends(get_db)):
+    wishitem = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.id == wishitem_id).first()
+    if not wishitem:
+        raise HTTPException(status.HTTP_204_NO_CONTENT, detail=f'No wishitem with id : {wishitem_id}')
+    db.delete(wishitem)
+    db.commit()
+    return {'detail': f'Deleted wishitem {wishitem_id}'}
 
 @router.get('/wishitems/{wishlist_id}')
 def get_all_wishitems_from_wishlist(wishlist_id: int, db: Session = Depends(get_db)):
