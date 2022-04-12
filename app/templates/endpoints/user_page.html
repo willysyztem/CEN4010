@@ -6,7 +6,6 @@
 
 {% block content%}
     <!-- User Page Top -->
-    <input type="hidden" id="id" value="{{user.id}}">
     {% include 'components/account_top.html' %}
 
     <!-- User Page Info -->
@@ -70,7 +69,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button class="btn btn-main" type="button" onclick="update_user()" data-bs-dismiss="modal">Savechanges</button>
+                                            <button class="btn btn-main" type="button" onclick="update_user('{{user.id}}')" data-bs-dismiss="modal">Savechanges</button>
                                         </div>                   
                                     </div>
                                 </div>
@@ -140,7 +139,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                <button class="btn btn-main" type="button" onclick="create_creditcard()" data-bs-dismiss="modal">Add Card</button>
+                                                <button class="btn btn-main" type="button" onclick="create_creditcard('{{user.id}}')" data-bs-dismiss="modal">Add Card</button>
                                             </div>                   
                                         </div>
                                     </div>

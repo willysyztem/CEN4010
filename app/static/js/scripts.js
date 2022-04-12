@@ -39,8 +39,7 @@ function register_user() {
     });
 }
 
-function update_user() {
-  let _username = document.getElementById("userInfoUsername").value;
+function update_user(_username) {
   let _password = document.getElementById("userInfoPassword");
   let _name = document.getElementById("userInfoName");
   let _home_address = document.getElementById("userInfoAddress");
@@ -55,24 +54,10 @@ function update_user() {
       "Content-Type": "application/json",
     },
   })
-    .then(function (response) {
-      if (!response.ok) {
-        throw Error("Err: User Info Was Not Updated");
-      }
-      console.log(response);
-      show_snackbar("User Info Updated");
-    })
-    .catch(function (error) {
-      console.log(error);
-      show_snackbar(error);
-    })
-    .finally(function () {
-      clear(_password, _name, _home_address);
-    });
+  .then(location.reload())
 }
 
-function create_creditcard() {
-  let _id = document.getElementById("id").value;
+function create_creditcard(_id) {
   let _creditcard = document.getElementById("userAddCardNumber");
   fetch("/api/creditcard/" + _id, {
     method: "POST",
@@ -84,24 +69,10 @@ function create_creditcard() {
       "Content-Type": "application/json",
     },
   })
-    .then(function (response) {
-      if (!response.ok) {
-        throw Error("Err: Could Not Add Credit Card!");
-      }
-      console.log(response);
-      show_snackbar("Credit Card Created Successfully!");
-    })
-    .catch(function (error) {
-      console.log(error);
-      show_snackbar(error);
-    })
-    .finally(function () {
-      clear(_creditcard);
-    });
+  .then(location.reload());
 }
 
-function update_user_cc() {
-  let _id = document.getElementById("id").value;
+function update_user_cc(_id) {
   let _creditcard = document.getElementById("userUpdateCardNumber");
   fetch("/api/creditcard/" + _id, {
     method: "PUT",
@@ -112,21 +83,7 @@ function update_user_cc() {
       "Content-Type": "application/json",
     },
   })
-    .then(function (response) {
-      if (!response.ok) {
-        throw Error("Err: Could Not Update Credit Card!");
-      }
-      clear(_creditcard);
-      console.log(response);
-      show_snackbar("Credit Card Updated Successfuly!");
-    })
-    .catch(function (error) {
-      console.log(error);
-      show_snackbar(error);
-    })
-    .finally(function () {
-      clear(_creditcard);
-    });
+    .then(location.reload());
 }
 
 function create_wishlist(user_id) {
