@@ -1,0 +1,14 @@
+<div class="row">
+    {% for book in books %}
+    <div class="col-12 col-md-3 d-flex align-items-center justify-content-center position-relative">
+        <div class="bookcard">
+            <img class="thumb" src="https://covers.openlibrary.org/b/isbn/{{book.isbn}}-M.jpg">
+            <img class="hero" src="https://covers.openlibrary.org/b/isbn/{{book.isbn}}-L.jpg">
+            <div class="cardtext">
+                <p>{{book.title[0:18] + ('...')}}</p>
+                <a href="/book/{{book.isbn}}">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

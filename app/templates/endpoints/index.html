@@ -5,5 +5,11 @@
 {% endblock%}
 
 {% block content%}
-    {% include 'components/bestsellers.html' %}
+<section id="catalog" class="py-2 vh-100">
+    <div class="container-lg text-center">
+        <h1>Bestsellers</h1>
+        <hr>
+        {% include 'components/bookcard.html' %}
+    </div>
+</section>
 {% endblock %}

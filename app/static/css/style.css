@@ -54,3 +54,84 @@
   display: flex;
   align-items: center;
 }
+
+/* FOR BOOKCARD */
+.bookcard {
+  position: relative;
+  width: 120px;
+  height: 180px;
+  border-radius: 5px;
+  margin: 5px;
+  transition: width 0.5s;
+}
+
+.cardtext {
+  z-index: -1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding: 10px;
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.thumb,
+.hero, 
+.cardtext {
+  width: 120px;
+  height: 180px;
+  position: absolute;
+  top: 0px;
+  left: 0;
+  border-radius: 4px;
+  transition: width 0.5s, opacity 0.5s;
+}
+
+.thumb {
+  opacity: 1;
+}
+
+.hero {
+  opacity: 0;
+}
+
+.bookcard:hover,
+.bookcard:hover .thumb,
+.bookcard:hover .hero, 
+.bookcard:hover .cardtext{
+  width: 240px;
+}
+
+.bookcard:hover .thumb {
+  opacity: 0;
+}
+
+.bookcard:hover .hero {
+  opacity: 1;
+}
+
+.bookcard:hover .cardtext {
+  z-index: 1000;
+  opacity: 1;
+}
+
+.cardtext:hover p {
+  color: white;
+}
+
+.cardtext:hover a {
+  color: white;
+  background-image: linear-gradient(to right, #1ed5a9, #01b4e4);
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-decoration: none;
+}
+
+.cardtext a, .cardtext p {
+  color: white;
+}
+
+#catalog {
+  background-color: #FFFAFA;
+}
