@@ -57,7 +57,7 @@ def get_user_wishlist(request: Request, db: Session = Depends(get_db), user=Depe
     return templates.TemplateResponse('endpoints/wishlist_page.html', {'request': request, 'user': user, 'wishlists': wishlists})
 
 # shoppingcart page
-@router.get('/api/shoppingcart')
+@router.get('/api/cart')
 def get_user_wishlist(request: Request, db: Session = Depends(get_db), user=Depends(manager)):
     shoppingcart = get_shoppingcart(user.id, db)
     return templates.TemplateResponse('endpoints/shoppingcart_page.html', {'request': request, 'user': user, 'shoppingcart': shoppingcart})

@@ -17,7 +17,7 @@
         <div class="row mt-4">
             <h2>Shopping Cart</h2>
             <div class="col-12 col-md-8">
-                <table class="table table-hover border border-2">
+                <table class="table table-hover border border-2" id="cartTable">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -43,7 +43,8 @@
                 </table>
             </div>
             <div class="col-12 col-md-3 border border-2 pt-4">
-                <h6>Total price: {total price}</h6>
+                <h6>Total Price: $<span id="cartTotal"></span></h6>
+                
                 <div class="d-grid gap-2 my-2">
                     <button type="button" class="btn btn-outline-success btn-sm">Make Purchase</button>
                     <button type="button" class="btn btn-outline-warning btn-sm">Continue Shopping</button>
@@ -51,4 +52,17 @@
             </div>
         </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let table = document.getElementById('cartTable'), total = 0;
+
+    for(var i = 1; i < table.rows.length; i++){
+        total = (total + parseFloat(table.rows[i].cells[3].innerHTML));
+    }
+  
+    document.getElementById('cartTotal').innerHTML = total.toFixed(2)
+</script>
+
 {% endblock %}
