@@ -80,7 +80,7 @@ def delete_wishitem(wishitem_id, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f'Wishitem with id : {wishitem_id} does not exist')
     wishitem.delete()
     db.commit()
-    return { 'detail' : 'Wishitem Deleted' }
+    return { 'detail' : 'Wish Item Deleted' }
 
 @router.get('/wishitems/{wishlist_id}')
 def get_all_wishitems_from_wishlist(wishlist_id: int, db: Session = Depends(get_db)):

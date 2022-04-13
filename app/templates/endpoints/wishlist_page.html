@@ -1,80 +1,82 @@
-
 {% extends 'shared/base.html' %}
 
 {% block title %}
-    <title>Bookstore 21 • Wishlist</title>
+<title>Bookstore 21 • Wishlist</title>
 {% endblock%}
 
 {% block content%}
-    <!-- User Page Top -->
-    <input type="hidden" id="id" value="{{user.id}}">
-    {% include 'components/account_top.html' %}
+<!-- User Page Top -->
+{% include 'components/account_top.html' %}
 
-    <!-- Wishlist Page Info -->
-    <section class="mt-2">
-        <div class="container-lg mt-2">
-            <div class="text-center">
-                <a href="/api/user/{{user.username}}" class="btn btn-main btn-sm">Account <i class="fa-solid fa-user"></i></a>
-                <a href="shoppingcart_page.html" class="btn btn-main btn-sm">Shopping Cart <i
-                        class="fa-solid fa-cart-shopping"></i></a>
-            </div>
-            {% if wishlists is defined and wishlists|length > 0 %}
-                <div class="row mt-2">
-                    <div class="col">
-                        {% for wishlist in wishlists %}
-                            <!-- wishlist accordion -->
-                            <div class="accordion mt-2" id="accordionWishlist">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                            {{wishlist.name}}
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                                        data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            {% if not wishlist.wishitems %}
-                                                <p>This Wishlist Has No Books...</p>
-                                            {% else %}
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">#</th>
-                                                            <th scope="col">Book Name</th>
-                                                            <th scope="col">Price</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for wishitem in wishlist.wishitems %}
-                                                            <tr>
-                                                                <th scope="row">{{loop.index}}</th>
-                                                                <td>{{wishitem.book.title[0:30]}}</td>
-                                                                <th>{{"%.2f"|format(wishitem.book.price)}}</th>
-                                                                <th><button class="btn btn-danger btn-sm" onclick="delete_wishitem('{{wishitem.id}}')"><i
-                                                                            class="fa-solid fa-trash-can"></i></button>
-                                                                    <button class="btn btn-success btn-sm">Move To Cart</button>
-                                                                </th>
-                                                            </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                            {% endif %}
-                                            <hr>
-                                            <button class="btn btn-danger btn-sm" onclick="delete_wishlist('{{wishlist.id}}')">Delete Wishlist</button>
-                                        </div>
-                                    </div>
-                                </div>
-
+<!-- Wishlist Page Info -->
+<section class="mt-2">
+    <div class="container-lg mt-2">
+        <div class="text-center">
+            <a href="/api/user/{{user.username}}" class="btn btn-main btn-sm">Account <i
+                    class="fa-solid fa-user"></i></a>
+            <a href="/api/shoppingcart" class="btn btn-main btn-sm">Shopping Cart <i
+                    class="fa-solid fa-cart-shopping"></i></a>
+        </div>
+        {% if wishlists is defined and wishlists|length > 0 %}
+        <div class="row mt-2">
+            <div class="col">
+                {% for wishlist in wishlists %}
+                <!-- wishlist accordion -->
+                <div class="accordion mt-2" id="accordionWishlist">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                {{wishlist.name}}
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                {% if not wishlist.wishitems %}
+                                <p>This Wishlist Has No Books...</p>
+                                {% else %}
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Book Name</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for wishitem in wishlist.wishitems %}
+                                        <tr>
+                                            <td scope="row">{{loop.index}}</th>
+                                            <td class="w-25"><img
+                                                    src="https://covers.openlibrary.org/b/isbn/{{wishitem.book.isbn}}.jpg" alt=""
+                                                    class="img-fluid img-thumbnail sc-img"></td>
+                                            <td>{{wishitem.book.title[0:30]}}</td>
+                                            <td>{{"%.2f"|format(wishitem.book.price)}}</td>
+                                            <td><button class="btn btn-danger btn-sm"
+                                                    onclick="delete_wishitem('{{wishitem.id}}')"><i
+                                                        class="fa-solid fa-trash-can"></i></button>
+                                                <button class="btn btn-success btn-sm">Move To Cart</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% endif %}
+                                <button class="btn btn-danger btn-sm"
+                                    onclick="delete_wishlist('{{wishlist.id}}')">Delete Wishlist</button>
                             </div>
-                        {% endfor %}
+                        </div>
                     </div>
+
                 </div>
-                {% if wishlists|length < 3 %}
-                    {% include 'components/add_wishlist.html' %}
-                {% endif %}
-            {% else %}
-                <p>You Have No Wishlists</p>
-                {% include 'components/add_wishlist.html' %}
+                {% endfor %}
+            </div>
+        </div>
+        {% if wishlists|length < 3 %} {% include 'components/add_wishlist.html' %} {% endif %} {% else %} <p>You Have No
+            Wishlists</p>
+            {% include 'components/add_wishlist.html' %}
             {% endif %}
-    </section>
+</section>
 {% endblock %}

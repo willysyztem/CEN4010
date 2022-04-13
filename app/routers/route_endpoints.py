@@ -10,6 +10,7 @@ from routers.authors import get_author
 from routers.publishers import get_publisher
 from routers.creditcards import get_user_creditcards
 from routers.wishlist import get_wishlist
+from routers.shoppingcart import get_shoppingcart
 from routers.auth import manager
 
 # model imports
@@ -54,3 +55,9 @@ def get_user_page(request: Request, db: Session = Depends(get_db), user=Depends(
 def get_user_wishlist(request: Request, db: Session = Depends(get_db), user=Depends(manager)):
     wishlists = get_wishlist(user.id, db)
     return templates.TemplateResponse('endpoints/wishlist_page.html', {'request': request, 'user': user, 'wishlists': wishlists})
+
+# shoppingcart page
+@router.get('/api/shoppingcart')
+def get_user_wishlist(request: Request, db: Session = Depends(get_db), user=Depends(manager)):
+    shoppingcart = get_shoppingcart(user.id, db)
+    return templates.TemplateResponse('endpoints/shoppingcart_page.html', {'request': request, 'user': user, 'shoppingcart': shoppingcart})

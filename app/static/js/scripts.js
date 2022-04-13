@@ -16,7 +16,7 @@ function register_user() {
     body: JSON.stringify({
       email: _email.value,
       password: _password.value,
-      name: _email.value.substring(0, _email.value.indexOf('@')),
+      name: _email.value.substring(0, _email.value.indexOf("@")),
       home_address: "Earth",
     }),
     headers: {
@@ -40,73 +40,80 @@ function register_user() {
 }
 
 function update_user(_username) {
-  let _password = document.getElementById("userInfoPassword");
-  let _name = document.getElementById("userInfoName");
-  let _home_address = document.getElementById("userInfoAddress");
+  let _password = document.getElementById("userInfoPassword").value;
+  let _name = document.getElementById("userInfoName").value;
+  let _home_address = document.getElementById("userInfoAddress").value;
   fetch("/api/users/" + _username, {
     method: "PUT",
     body: JSON.stringify({
-      password: _password.value,
-      name: _name.value,
-      home_address: _home_address.value,
+      password: _password,
+      name: _name,
+      home_address: _home_address,
     }),
     headers: {
       "Content-Type": "application/json",
     },
-  })
-  .then(location.reload())
+  }).then(function () {
+    location.reload();
+  });
 }
 
-function create_creditcard(_id) {
-  let _creditcard = document.getElementById("userAddCardNumber");
-  fetch("/api/creditcard/" + _id, {
+function create_creditcard(_user_id) {
+  let _creditcard = document.getElementById("userAddCardNumber").value;
+  fetch("/api/creditcard/" + _user_id, {
     method: "POST",
     body: JSON.stringify({
-      card_number: _creditcard.value,
-      owner_id: _id,
+      card_number: _creditcard,
+      owner_id: _user_id,
     }),
     headers: {
       "Content-Type": "application/json",
     },
-  })
-  .then(location.reload());
+  }).then(function () {
+    location.reload();
+  });
 }
 
-function update_user_cc(_id) {
-  let _creditcard = document.getElementById("userUpdateCardNumber");
-  fetch("/api/creditcard/" + _id, {
+function update_user_cc(_user_id) {
+  let _creditcard = document.getElementById("userUpdateCardNumber").value;
+  fetch("/api/creditcard/" + _user_id, {
     method: "PUT",
     body: JSON.stringify({
-      card_number: _creditcard.value,
+      card_number: _creditcard,
     }),
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then(location.reload());
+  }).then(function () {
+    location.reload();
+  });
 }
 
-function create_wishlist(user_id) {
-  let _wishlist = document.getElementById("newWishlist");
-  fetch("/api/wishlist/" + user_id, {
+function create_wishlist(_user_id) {
+  let _wishlist = document.getElementById("newWishlist").value;
+  fetch("/api/wishlist/" + _user_id, {
     method: "POST",
     body: JSON.stringify({
-      name: _wishlist.value,
-      owner_id: user_id,
+      name: _wishlist,
+      owner_id: _user_id,
     }),
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(location.reload());
+  }).then(function () {
+    location.reload();
+  });
 }
 
-function delete_wishlist(wishlist_id) {
-  fetch("/api/wishlist/" + wishlist_id, {
+function delete_wishlist(_wishlist_id) {
+  fetch("/api/wishlist/" + _wishlist_id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(location.reload());
+  }).then(function () {
+    location.reload();
+  });
 }
 
 function add_wishitem(_wishlist_id, _book_id) {
@@ -124,11 +131,39 @@ function add_wishitem(_wishlist_id, _book_id) {
     .then((data) => show_snackbar(data.detail));
 }
 
-function delete_wishitem(wishitem_id) {
-  fetch("/api/wishlist/wishitems/" + wishitem_id, {
+function delete_wishitem(_wishitem_id) {
+  fetch("/api/wishlist/wishitems/" + _wishitem_id, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
-  }).then(location.reload());
+  }).then(function () {
+    location.reload();
+  });
 }
+
+function add_cartitem(_user_id, _book_id) {
+  fetch("/api/shoppingcart/cartitems/" + _user_id, {
+    method: "POST",
+    body: JSON.stringify({
+      book_id: _book_id
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => response.json())
+    .then((data) => show_snackbar(data.detail));
+}
+
+function delete_cartitem(_cartitem_id) {
+  fetch("/api/shoppingcart/cartitems/" + _cartitem_id, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(function () {
+    location.reload();
+  });
+}
+
+

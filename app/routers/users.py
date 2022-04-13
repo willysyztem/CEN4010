@@ -50,13 +50,6 @@ def get_all_users(db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find users')
     return users
 
-# @router.get('/{username}', response_model = List[schema.ShowUser])
-# def get_user(username: EmailStr, db: Session = Depends(get_db)):
-#     user = db.query(model.Users).filter(model.Users.username == username).first()
-#     if not user:
-#         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
-#     return user
-
 @router.put('/{username}')
 def update_user(username: EmailStr, user_info: schema.UpdateUser, db: Session = Depends(get_db)):
     updated_user = db.query(model.Users).filter(model.Users.username == username).update({
@@ -65,7 +58,7 @@ def update_user(username: EmailStr, user_info: schema.UpdateUser, db: Session = 
         'home_address': user_info.home_address
     })
     if not updated_user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f'Wishitem with id : {username} does not exist')
     db.commit()
     return {'detail': f'Update user {username}'}
 

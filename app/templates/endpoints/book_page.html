@@ -38,7 +38,7 @@
                 <p class="text-white">Author</p>
                 <p class="text-white fw-bold m-0">{{publisher.company_name}}</p>
                 <p class="text-white">Publisher</p>
-                <button type="button" class="btn btn-warning btn-sm">
+                <button type="button" class="btn btn-warning btn-sm" onclick="add_cartitem('{{user.id}}', '{{book.id}}')">
                     Add To Cart
                 </button>
                 <div class="dropdown mt-1">

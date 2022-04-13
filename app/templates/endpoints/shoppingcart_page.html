@@ -1,120 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'shared/base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookstore 21</title>
+{% block title %}
+<title>Bookstore 21 • Shopping Cart</title>
+{% endblock%}
 
-    <!-- Bootstraps -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% block content%}
+<!-- User Page Top -->
+{% include 'components/account_top.html' %}
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet">
-
-    <!-- custom styles -->
-    <link href="../static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    <!-- nav -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-default">
-        <div class="container-xxl">
-            <a href="index.html" class="navbar-brand">
-                <span class="fw-bold text-white">Bookstore 21</span>
-            </a>
-
-            <!-- toggle button for mobile nav -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav"
-                aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- navbar links -->
-            <div class="collapse navbar-collapse justify-content-end align-center" id="main-nav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a href="/docs" class="nav-link text-light">Docs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="/redoc" class="nav-link text-light">Redocs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="user_page.html" class="nav-link text-light">Account</a>
-                    </li>
-                </ul>
+<section class="mt-2">
+    <div class="container-lg mt-2">
+        <div class="text-center">
+            <a href="/api/wishlist" class="btn btn-main btn-sm">Wishlist <i class="fa-solid fa-list"></i></a>
+            <a href="/api/user/{{user.username}}" class="btn btn-main btn-sm">Account <i class="fa-solid fa-user"></i></a>
+        </div>
+        <div class="row mt-4">
+            <h2>Shopping Cart</h2>
+            <div class="col-12 col-md-8">
+                <table class="table table-hover border border-2">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col"></th>
+                            <th scope="col">Book Name</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cartitem in shoppingcart.cartitems %}
+                        <tr>
+                            <td scope="row">{{loop.index}}</th>
+                            <td class="w-25"><img src="https://covers.openlibrary.org/b/isbn/{{cartitem.book.isbn}}.jpg" alt=""
+                                    class="img-fluid img-thumbnail sc-img"></td>
+                            <td>{{cartitem.book.title[0:30]}}</td>
+                            <td>{{"%.2f"|format(cartitem.book.price)}}</td>
+                            <td><button class="btn btn-danger btn-sm" onclick="delete_cartitem('{{cartitem.id}}')"><i
+                                        class="fa-solid fa-trash-can"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-md-3 border border-2 pt-4">
+                <h6>Total price: {total price}</h6>
+                <div class="d-grid gap-2 my-2">
+                    <button type="button" class="btn btn-outline-success btn-sm">Make Purchase</button>
+                    <button type="button" class="btn btn-outline-warning btn-sm">Continue Shopping</button>
+                </div>
             </div>
         </div>
-    </nav>
-
-    <!-- Book (product page) -->
-    <section class="bg-account-default">
-        <div class="container-lg">
-            <div class="row p-5">
-                <div class="col-12 text-center">
-                    <span class="display-6 text-white fw-bold">{username}</span>
-                    <span class="text-white">Member since {date-created}</span>
-                </div>
-    </section>
-
-    <section class="mt-2">
-        <div class="container-lg mt-2">
-            <div class="text-center">
-                <a href="wishlist_page.html" class="btn btn-main">Wishlist <i class="fa-solid fa-list"></i></a>
-                <a href="user_page.html" class="btn btn-main">Account <i class="fa-solid fa-user"></i></a>
-            </div>
-            <div class="row mt-4">
-                <h2>Shopping Cart</h2>
-                <div class="col-12 col-md-8">
-                    <table class="table table-hover border border-2">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col"></th>
-                                <th scope="col">Book Name</th>
-                                <th scope="col">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td class="w-25"><img src="https://covers.openlibrary.org/b/id/12648172-L.jpg" alt=""
-                                        class="img-fluid img-thumbnail sc-img"></td>
-                                <td>Book 1</td>
-                                <td>$12.99</td>
-                                <td><button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td class="w-25"><img src="https://covers.openlibrary.org/b/id/12648172-L.jpg" alt=""
-                                        class="img-fluid img-thumbnail sc-img"></td>
-                                <td>Book 1</td>
-                                <td>$12.99</td>
-                                <td><button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-12 col-md-3 border border-2 pt-4">
-                    <h6>Total price: {total price}</h6>
-                    <hr>
-                    <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-outline-success">Make Purchase</button>
-                        <button type="button" class="btn btn-outline-warning">Continue Shopping</button>
-                    </div>
-                </div>
-            </div>
-    </section>
-
-    
-    <!-- Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+</section>
+{% endblock %}
