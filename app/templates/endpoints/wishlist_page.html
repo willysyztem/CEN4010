@@ -14,8 +14,7 @@
         <div class="text-center">
             <a href="/api/user/{{user.username}}" class="btn btn-main btn-sm">Account <i
                     class="fa-solid fa-user"></i></a>
-            <a href="/api/shoppingcart" class="btn btn-main btn-sm">Cart <i
-                    class="fa-solid fa-cart-shopping"></i></a>
+            <a href="/api/cart" class="btn btn-main btn-sm">Cart <i class="fa-solid fa-cart-shopping"></i></a>
         </div>
         {% if wishlists is defined and wishlists|length > 0 %}
         <div class="row mt-2">
@@ -50,8 +49,8 @@
                                         <tr>
                                             <td scope="row">{{loop.index}}</th>
                                             <td class="w-25"><img
-                                                    src="https://covers.openlibrary.org/b/isbn/{{wishitem.book.isbn}}.jpg" alt=""
-                                                    class="img-fluid img-thumbnail sc-img"></td>
+                                                    src="https://covers.openlibrary.org/b/isbn/{{wishitem.book.isbn}}.jpg"
+                                                    alt="" class="img-fluid img-thumbnail sc-img"></td>
                                             <td>{{wishitem.book.title[0:30]}}</td>
                                             <td>{{"%.2f"|format(wishitem.book.price)}}</td>
                                             <td><button class="btn btn-danger btn-sm"
@@ -77,6 +76,6 @@
         {% if wishlists|length < 3 %} {% include 'components/add_wishlist.html' %} {% endif %} {% else %} <p>You Have No
             Wishlists</p>
             {% include 'components/add_wishlist.html' %}
-            {% endif %}
+        {% endif %}
 </section>
 {% endblock %}
