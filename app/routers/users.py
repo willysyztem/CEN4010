@@ -1,5 +1,4 @@
 from fastapi import Depends, status, HTTPException, APIRouter
-
 from typing import List
 from pydantic import EmailStr
 
@@ -11,7 +10,7 @@ import schemas.users as schema
 
 from routers.shoppingcart import create_shoppingcart
 
-import utils, oauth2
+import utils
 
 router = APIRouter(
     prefix = '/api/users',
@@ -21,7 +20,7 @@ router = APIRouter(
 # current_user_id: int = Depends(oauth2.get_current_user)
 
 @router.post('/', status_code = status.HTTP_201_CREATED, response_model=schema.ShowUser)
-def create_users(user: schema.User, db: Session = Depends(get_db)): 
+def create_user(user: schema.User, db: Session = Depends(get_db)): 
     try:
         #hash the password
         hashed_password = utils.hash(user.password)
@@ -37,7 +36,7 @@ def create_users(user: schema.User, db: Session = Depends(get_db)):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-
+        
         # initiate shopping cart for user
         create_shoppingcart(new_user.id, db)
         return new_user
@@ -51,22 +50,15 @@ def get_all_users(db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find users')
     return users
 
-@router.get('/{username}', response_model = List[schema.ShowUser])
-def get_user(username: EmailStr, db: Session = Depends(get_db)):
-    user = db.query(model.Users).filter(model.Users.username == username).first()
-    if not user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
-    return user
-
-@router.put('/{username}', status_code =status.HTTP_202_ACCEPTED)
-def update_user(username: EmailStr, user: schema.UpdateUser, db: Session = Depends(get_db)):
+@router.put('/{username}')
+def update_user(username: EmailStr, user_info: schema.UpdateUser, db: Session = Depends(get_db)):
     updated_user = db.query(model.Users).filter(model.Users.username == username).update({
-        'password': user.password,
-        'name': user.name,
-        'home_address': user.home_address
+        'password': utils.hash(user_info.password),
+        'name': user_info.name,
+        'home_address': user_info.home_address
     })
     if not updated_user:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with username: {username}')
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f'Wishitem with id : {username} does not exist')
     db.commit()
     return {'detail': f'Update user {username}'}
 

@@ -1,7 +1,5 @@
 from fastapi import Depends, status, HTTPException, APIRouter
 
-from typing import List
-
 from sqlalchemy.orm import Session
 from db.database import get_db
 
@@ -28,7 +26,7 @@ def create_publisher(publisher: schema.Publishers, db: Session = Depends(get_db)
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = 'Publisher already exists')
 
-@router.get('/',  response_model = List[schema.Publishers])
+@router.get('/')
 def get_all_publishers(db: Session = Depends(get_db)):
     publishers = db.query(model.Publishers).all()
     if not publishers:
@@ -40,13 +38,6 @@ def get_publisher(publisher_id, db: Session = Depends(get_db)):
     publisher = db.query(model.Publishers).filter(model.Publishers.id == publisher_id).first()
     if not publisher:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with publisher_id: {publisher_id}')
-    return publisher
-
-@router.get('/{company_name}', response_model = schema.Publishers)
-def get_publisher(company_name, db: Session = Depends(get_db)):
-    publisher = db.query(model.Publishers).filter(model.Publishers.company_name == company_name).first()
-    if not publisher:
-        raise HTTPException(status.HTTP_404_NOT_FOUND,'No query found with title: {title}')
     return publisher
 
 @router.put('/{publisher_id}', status_code = status.HTTP_202_ACCEPTED)

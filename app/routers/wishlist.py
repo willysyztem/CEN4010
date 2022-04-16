@@ -1,4 +1,4 @@
-from fastapi import Depends, status, HTTPException, APIRouter
+from fastapi import Depends, Response, status, HTTPException, APIRouter
 
 from typing import List
 
@@ -12,8 +12,8 @@ import models.cartitems
 import schemas.wishlist as schema
 
 from routers.shoppingcart import add_cartitem
+from routers.books import get_book_by_id
 
-import utils, oauth2
 
 MAX_ALLOWED_WISHLIST = 3
 
@@ -32,7 +32,7 @@ def create_wishlist(user_id: int, new_wishlist: schema.WishList, db: Session = D
             )
             for wishlist in existing_wishlist:
                 if wishlist.name == wish_list.name:
-                    raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f'Wishlist name already exists => {wish_list.name}')
+                    raise HTTPException(status.HTTP_302_FOUND, detail=f'Wishlist name already exists => {wish_list.name}')
             db.add(wish_list)
             db.commit()
             db.refresh(wish_list)
@@ -40,29 +40,26 @@ def create_wishlist(user_id: int, new_wishlist: schema.WishList, db: Session = D
     else:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail='Could not create wish list => Wishlist limit reached!')
 
-@router.get('/{user_id}', response_model = List[schema.ShowWishList])
+@router.get('/{user_id}')
 def get_wishlist(user_id: int, db: Session = Depends(get_db)):
     wishlists = db.query(model.WishList).filter(model.WishList.owner_id == user_id).all()
     for wishlist in wishlists:
-        wishlist.wishitems = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.wishlist_id == wishlist.id).all()
+        wishlist.wishitems = get_all_wishitems_from_wishlist(wishlist.id, db)
     if not wishlists:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find wishlist that belongs to user with id: {user_id}')
+        return {}
     return wishlists
 
 @router.delete('/{wishlist_id}')
 def delete_wishlist(wishlist_id, db: Session = Depends(get_db)):
-    try:
-        wishlist = db.query(model.WishList).filter(model.WishList.id == wishlist_id).first()
-        if not wishlist:
-            raise HTTPException(status.HTTP_204_NO_CONTENT, f'No wishlist with id : {wishlist_id}')
-        db.delete(wishlist)
-        db.commit()
-        return {'detail': f'Deleted wishlist {wishlist_id}'}
-    except Exception as e:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not delete wishlist => {e}')
+    wishlist = db.query(model.WishList).filter(model.WishList.id == wishlist_id)
+    if wishlist.first() == None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f'Wishlist with id : {wishlist_id} does not exist')
+    wishlist.delete()
+    db.commit()
+    return { 'detail' : 'Wishlist Deleted' }
 
 # WishItems
-# @router.post('/wishitems/', status_code = status.HTTP_201_CREATED)
+@router.post('/wishitems/', status_code = status.HTTP_201_CREATED)
 def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
     try:
         wishitem = models.wishitems.WishItems(
@@ -72,29 +69,32 @@ def add_wishitem(new_wishitem: schema.WishItem, db: Session = Depends(get_db)):
         db.add(wishitem)
         db.commit()
         db.refresh(wishitem)
-        return {'detail': f'Cart item created for wishlist with id: {wishitem.wishlist_id}'}
+        return {'detail': f'Book added to wishlist!'}
     except Exception:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not create cart item.')
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not add book to wishlist!')
 
-# @router.delete('/wishitems/{wishitem_id}')
-# def delete_wishitem(wishitem_id, db: Session = Depends(get_db)):
-#     wishitem = db.query(models.cartitems.CartItems).filter(models.cartitems.CartItems.id == wishitem_id).first()
-#     if not wishitem:
-#         raise HTTPException(status.HTTP_204_NO_CONTENT, f'No wishitem with id : {wishitem_id}')
-#     db.delete(wishitem)
-#     db.commit()
-#     return {'detail': f'Deleted wishitem {wishitem_id}'}
+@router.delete('/wishitems/{wishitem_id}')
+def delete_wishitem(wishitem_id, db: Session = Depends(get_db)):
+    wishitem = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.id == wishitem_id)
+    if wishitem.first() == None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f'Wishitem with id : {wishitem_id} does not exist')
+    wishitem.delete()
+    db.commit()
+    return { 'detail' : 'Wish Item Deleted' }
 
 @router.get('/wishitems/{wishlist_id}')
 def get_all_wishitems_from_wishlist(wishlist_id: int, db: Session = Depends(get_db)):
-    wishitem = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.wishlist_id == wishlist_id).all()
-    if not wishitem:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find cart items that belongs to wishlist with id: {wishlist_id}')
-    return wishitem
+    wishitems = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.wishlist_id == wishlist_id).all()
+    for wishitem in wishitems:
+        wishitem.book = get_book_by_id(wishitem.book_id, db)
+    if not wishitems:
+        return []
+    return wishitems
 
-@router.get('/wishitem/{wishitem_id}')
+@router.get('/wishitem/{wishitem_id}', )
 def get_wishitem(wishitem_id: int, db: Session = Depends(get_db)):
     wishitem = db.query(models.wishitems.WishItems).filter(models.wishitems.WishItems.id == wishitem_id).first()
+    wishitem.book = get_book_by_id(wishitem.book_id, db)
     if not wishitem:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find cart item that belongs to wishlist with id: {wishitem_id}')
     return wishitem
@@ -107,8 +107,6 @@ def add_wishitem_to_shoppingcart(wishitem_id: int, user_id: int, db: Session = D
         db.add(new_cartitem)
         db.commit()
         db.refresh(new_cartitem)
-        delete_wishitem(wishitem, db)
         return new_cartitem
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not add wishitem to cart item => {e}')
-    

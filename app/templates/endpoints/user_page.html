@@ -1,0 +1,154 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+    <title>Bookstore 21 • Profile</title>
+{% endblock%}
+
+{% block content%}
+    <!-- User Page Top -->
+    {% include 'components/account_top.html' %}
+
+    <!-- User Page Info -->
+    <section class="mt-2 vh-100">
+        <div class="container-lg mt-2">
+            <div class="text-center">
+                <a href="/api/wishlist" class="btn btn-main btn-sm">Wishlist <i class="fa-solid fa-list"></i></a>
+                <a href="/api/cart" class="btn btn-main btn-sm">Cart <i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+            <div class="accordion mt-2" id="accordionMain">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Account Info
+                      </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionMain">
+                      <div class="accordion-body">
+                            <h5>Username</h5>
+                            <p>{{user.username}}</p>
+
+                            <h5>Email</h5>
+                            <p>{{user.email}}</p>
+
+                            <h5>Name</h5>
+                            <p>{{user.name}}</p>
+
+                            <h5>Address</h5>
+                            <p>{{user.home_address}}</p>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-main " data-bs-toggle="modal" data-bs-target="#userInfoModal">Edit Info</button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="userInfoModalLabel">Update Your Personal Info</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Form Goes Here -->
+                                            <form>
+                                                <input type="hidden" id="userInfoUsername" value="{{user.username}}">
+                                                <div class="mb-3">
+                                                    <label for="userInfoPassword" class="form-label">Password</label>
+                                                    <input type="password" class="form-control" id="userInfoPassword"
+                                                        placeholder="New Password">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="userInfoName" class="form-label">Full Name</label>
+                                                    <input type="text" class="form-control" id="userInfoName" placeholder="John Doe">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="userInfoAddress" class="form-label">Address</label>
+                                                    <input type="text" class="form-control" id="userInfoAddress"
+                                                        name="home_address"
+                                                        placeholder="123 W 45 ST, APT #101 Miami FL, 33133">
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button class="btn btn-main" type="button" onclick="update_user('{{user.username}}')" data-bs-dismiss="modal">Savechanges</button>
+                                        </div>                   
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Of Modal -->
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Payment Info
+                      </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionMain">
+                      <div class="accordion-body">
+                            <h5>Credit Card Number</h5>
+                            {% if creditcard.card_number is defined %} 
+                                <p>{{creditcard.card_number}}</p>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-main " data-bs-toggle="modal" data-bs-target="#userUpdateCCModal">Edit Credit Card</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="userUpdateCCModal" tabindex="-1" aria-labelledby="userUpdateCCModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="userUpdateCCModalLabel">Edit Credit Card Info</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Form Goes Here -->
+                                                <form>
+                                                    <div class="mb-3">
+                                                        <label for="userUpdateCardNumber" class="form-label">Credit Card Number</label>
+                                                        <input type="text" class="form-control" id="userUpdateCardNumber"
+                                                            placeholder="1234-1234-1234-1234">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button class="btn btn-main" type="button" onclick="update_user_cc('{{user.id}}')" data-bs-dismiss="modal">Save Changes</button>
+                                            </div>                   
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-main " data-bs-toggle="modal" data-bs-target="#userAddCCModal">Add Credit Card</button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="userAddCCModal" tabindex="-1" aria-labelledby="userAddCCModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="userAddCCModalLabel">Add New Credit Card</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Form Goes Here -->
+                                                <form>
+                                                    <div class="mb-3">
+                                                        <label for="userAddCardNumber" class="form-label">Credit Card Number</label>
+                                                        <input type="text" class="form-control" id="userAddCardNumber"
+                                                            placeholder="1234-1234-1234-1234">
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button class="btn btn-main" type="button" onclick="create_creditcard('{{user.id}}')" data-bs-dismiss="modal">Add Card</button>
+                                            </div>                   
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

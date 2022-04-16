@@ -1,6 +1,9 @@
+from time import timezone
 from models.base import Base
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean, Date
 from sqlalchemy.orm import relationship
+
+from datetime import date
 
 class Users(Base):
     __tablename__ = 'users'
@@ -11,6 +14,8 @@ class Users(Base):
     username = Column(String, unique=True)
     name = Column(String)
     home_address = Column(String)
+    is_superuser = Column(Boolean, nullable=False, default=False)
+    date_created = Column(Date, nullable=False, default=date.today())
 
     # Relationships
     order = relationship('Orders', back_populates='owner')

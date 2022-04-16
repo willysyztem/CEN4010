@@ -6,8 +6,6 @@ from db.database import get_db
 import models.books as model
 import schemas.books as schema
 
-import utils, oauth2
-
 router = APIRouter(
     prefix = '/api/books',
     tags=['Books Management']
@@ -15,16 +13,31 @@ router = APIRouter(
 
 @router.get('/')
 def get_all_books(db: Session = Depends(get_db)):
-    book = db.query(model.Books).all()
-    if not book:
+    books = db.query(model.Books).all()
+    if not books:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find books')
-    return book
+    return books
+
+@router.get('/')
+def get_bestsellers(db: Session = Depends(get_db)):
+    books = db.query(model.Books).order_by(model.Books.copies_sold.desc()).limit(12).all()
+    if not books:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find books')
+    return books
+
 
 @router.get('/{isbn}')
-def get_book(isbn, db: Session = Depends(get_db)):
+def get_book_by_isbn(isbn, db: Session = Depends(get_db)):
     book = db.query(model.Books).filter(model.Books.isbn == isbn).first()
     if not book:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with isbn: {isbn}')
+    return book
+
+@router.get('/{book_id}')
+def get_book_by_id(book_id, db: Session = Depends(get_db)):
+    book = db.query(model.Books).filter(model.Books.id == book_id).first()
+    if not book:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f'No query found with id: {book_id}')
     return book
 
 @router.put('/{isbn}', status_code = status.HTTP_202_ACCEPTED)

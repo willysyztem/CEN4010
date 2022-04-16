@@ -14,6 +14,8 @@ class Books(Base):
     copies_sold = Column(Integer, nullable = False)
     author_id = Column(Integer, ForeignKey('authors.id'), nullable = False)
     publisher_id = Column(Integer, ForeignKey('publishers.id'), nullable = False)
+    genre = Column(String)
+    pages = Column(String)
 
     # Relationships
     author = relationship('Authors', back_populates='books')
