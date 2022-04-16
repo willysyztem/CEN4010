@@ -3,7 +3,7 @@ from fastapi import Depends, status, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models.shoppingcart as model
+import models.shoppingCart as model
 import models.cartitems
 
 import schemas.shoppingcart as schema

@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from app.routers import bookrating
 
 # Settings For Fast API & DB
 from config.settings import settings
@@ -12,7 +11,7 @@ from models.base import Base
 Base.metadata.create_all(bind=engine)
 
 # Import all routers (apis)
-from routers import auth, authors, books, creditcards, orders, publishers, shoppingcart, users, wishlist
+from routers import auth, authors, books, creditcards, orders, publishers, shoppingcart, users, wishlist, bookrating
 
 #Boilerplate stuff for fastapi
 def start_app():

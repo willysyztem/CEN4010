@@ -1,18 +1,18 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import date
 
 # Book Rating
 class BookRating(BaseModel):
 
-    id: int
+    user_id: str
     book: str
-    rating: int
+    rating: int = Field(None, gt=1, lt=5)
     created_at: date
 
 # Book Comments
 class BookComment(BaseModel):
     
-    id: int
+    user_id: str
     book: str
     comment: str
     created_at: date

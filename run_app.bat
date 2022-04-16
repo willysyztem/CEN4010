@@ -8,14 +8,15 @@ IF exist %dir_venv% (
     echo VIRTUAL ENVIRONMENT EXISTS - SKIPPING
 ) ELSE (
     echo BUILDING VIRTUAL ENVIRONMENT
-    CALL python37 -m venv %dir_venv%)
+    CALL python -m venv %dir_venv%)
 
 echo ACTIVATING VIRTUAL ENVIRONMENT
 CALL venv\Scripts\activate.bat
 
 echo INSTALLING DEPENDENCIES
-pip install -r requirements.txt
+pip install -r "D:\CEN4010Main\CEN4010\CEN4010\requirements.txt"
 
 echo RUN UVICORN SERVER
-cd app
+d:
+cd "D:\CEN4010Main\CEN4010\CEN4010\app"
 uvicorn main:app --reload
