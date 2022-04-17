@@ -8,11 +8,6 @@
   - [Windows](https://github.com/willysyztem/CEN4010/tree/profile-management#windows)
   - [Mac](https://github.com/willysyztem/CEN4010/tree/profile-management#mac)
 - [Documentation](https://github.com/willysyztem/CEN4010/tree/profile-management#documentation)
-- [Tests](https://github.com/willysyztem/CEN4010/tree/profile-management#running-tests)
-  - [Get User](https://github.com/willysyztem/CEN4010/tree/profile-management#get-users)
-  - [Create User](https://github.com/willysyztem/CEN4010/tree/profile-management#create-users)
-  - [Delete User](https://github.com/willysyztem/CEN4010/tree/profile-management#delete-users)
-  - [Update User](https://github.com/willysyztem/CEN4010/tree/profile-management#update-users)
 
 ## Frameworks
 
@@ -33,10 +28,10 @@
 
 API Actions
 
-- Retrieve List of Books by Genre
-- Retrieve List of Top Sellers (Top 10 books that have sold the most copied)
-- Retrieve List of Books for a particular rating and higher
-- Retrieve List of X Books at a time where X is an integer from a given position in the overall recordset
+- ✅ Retrieve List of Books by Genre
+- ✅ Retrieve List of Top Sellers (Top 10 books that have sold the most copied)
+- ✅ Retrieve List of Books for a particular rating and higher
+- ✅ Retrieve List of X Books at a time where X is an integer from a given position in the overall recordset
 
 **Feature 2: Profile Management**
 
@@ -60,19 +55,19 @@ API Actions
 
 API Actions
 
-- An administrator must create a book with the book ISBN, book name, book description, price, author, genre, publisher, year published, and copies sold.
+- ✅ An administrator must create a book with the book ISBN, book name, book description, price, author, genre, publisher, year published, and copies sold.
 - ✅ Must be able to retrieve a book’s details
-- An administrator must be able to create an author with first name, last name, biography, and publisher
+- ✅ An administrator must be able to create an author with first name, last name, biography, and publisher
 - ✅ Must be able to retrieve a list of books associated with an author
 
 **Feature 5: Book Rating and Commenting**
 
 API Actions
 
-- Must be able to create a rating for a book by a user on a 5-star scale with a datestamp
-- Must be able to create a comment for a book by a user with a datestamp
-- Must be able to retrieve a list of ratings and comments sorted by highest rating
-- Must be able to retrieve the average rating for a book
+- ✅ Must be able to create a rating for a book by a user on a 5-star scale with a datestamp
+- ✅ Must be able to create a comment for a book by a user with a datestamp
+- ✅ Must be able to retrieve a list of ratings and comments sorted by highest rating
+- ✅ Must be able to retrieve the average rating for a book
 
 **Feature 6: Wish List Management**
 
@@ -205,16 +200,6 @@ currently, we have
 - `hash()` Hashes plain text passwords using bcrypt
 - `verify()` Compares plain text passwords and hashed passwords stored in DB
 
-**oauth2.py**
-
-Open Auth class to create access tokens and verify access tokens
-using jwt token format
-
-The only thing you need to change here would be the `SECRET_KEY` to
-one shared by the group.
-
-for more info on this, read [FastAPI Security](https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/)
-
 **main.py**
 
 The brains of our restful backend API here will add your API endpoints.
@@ -232,14 +217,3 @@ and inside our `start_app()` include your router to the `app` object
 ex:
 
 `app.inclue_router(my_router.router)`
-
-## Authentication
-
-Authentication has been added to our backend
-meaning that only authorized logged in users can use
-the API
-
-![](https://i.ibb.co/Btm1GXP/authentication.gif)
-
-add authentication to your API add the end of the API functions
-using `Depends(oauth2.get_current_user)`
