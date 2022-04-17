@@ -267,38 +267,6 @@ function create_author() {
     });
 }
 
-function create_author() {
-  let author_first_name = document.getElementById("author_first_name");
-  let author_last_name = document.getElementById("author_last_name");
-  let author_biography = document.getElementById("author_biography");
-
-  fetch("/api/authors/", {
-    method: "POST",
-    body: JSON.stringify({
-      first_name: author_first_name.value,
-      last_name: author_last_name.value,
-      biography: author_biography.value
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(function (response) {
-      if (!response.ok) {
-        throw Error("Err: Could Not Create Publisher");
-      }
-      console.log(response);
-      show_snackbar("Publisher Created Successfully!");
-    })
-    .catch(function (error) {
-      console.log(error);
-      show_snackbar(error);
-    })
-    .finally(function () {
-      clear(author_first_name, author_last_name, author_biography);
-    });
-}
-
 function create_publisher() {
   let publisher_name = document.getElementById("publisher_name");
   let publisher_country = document.getElementById("publisher_country");
@@ -327,4 +295,30 @@ function create_publisher() {
     .finally(function () {
       clear(publisher_name, publisher_country);
     });
+}
+
+function create_comment(isbn, comment, userId) {
+  fetch("/api/bookrating/bookcomment/" + isbn + "/" + comment + "/" + userId, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+function create_rating(isbn, newrating, userId) {
+  fetch("/api/bookrating/" + isbn + "/" + newrating + "/" + userId, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+}
+
+function post_comment_rating(isbn, userId) {
+  let _rating = document.getElementById("rating").value;
+  let _comment = document.getElementById("comment").value;
+  create_rating(isbn, _rating, userId)
+  create_comment(isbn, _comment, userId)
+  location.reload()
 }

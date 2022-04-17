@@ -37,7 +37,7 @@ def get_all_bookratings(db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find book ratings')
     return bookrating
 
-@router.post('', status_code=status.HTTP_201_CREATED)
+@router.post('/{isbn}/{newrating}/{userId}', status_code=status.HTTP_201_CREATED)
 def new_bookrating(isbn, newrating: int, userId, db: Session = Depends(get_db)):
     checkifbookexists(isbn, db)
     if newrating > 5 or newrating < 1:
@@ -104,11 +104,9 @@ def get_comments_by_isbn(isbn, db: Session = Depends(get_db)):
                 comment = i.comment,
                 created_at = i.created_at
             ))
-    if not bookcomment:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find book comments')
     return bookcomment
 
-@router.post('/bookcomment', status_code=status.HTTP_201_CREATED)
+@router.post('/bookcomment/{isbn}/{comment}/{userId}', status_code=status.HTTP_201_CREATED)
 def new_bookcomment(isbn, comment, userId, db: Session = Depends(get_db)):
     checkifbookexists(isbn, db)
     now = datetime.now()
