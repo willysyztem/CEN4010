@@ -30,6 +30,6 @@ def start_app():
 
 app = start_app()
 
-@app.get('/')
+@app.get('/', include_in_schema=False)
 def redirect():
     return responses.RedirectResponse('/login')

@@ -56,7 +56,9 @@
                                             <td><button class="btn btn-danger btn-sm"
                                                     onclick="delete_wishitem('{{wishitem.id}}')"><i
                                                         class="fa-solid fa-trash-can"></i></button>
-                                                <button class="btn btn-success btn-sm">Move To Cart</button>
+                                                <button class="btn btn-success btn-sm"
+                                                    onclick="add_wishitem_to_wishlist('{{wishitem.id}}', '{{user.id}}')">Move
+                                                    To Cart</button>
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -76,6 +78,6 @@
         {% if wishlists|length < 3 %} {% include 'components/add_wishlist.html' %} {% endif %} {% else %} <p>You Have No
             Wishlists</p>
             {% include 'components/add_wishlist.html' %}
-        {% endif %}
+            {% endif %}
 </section>
 {% endblock %}

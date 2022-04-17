@@ -11,3 +11,5 @@ class Books(BaseModel):
     published_date: date 
     price: float
     copies_sold: int
+    genre: str
+    pages: int

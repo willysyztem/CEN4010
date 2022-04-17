@@ -12,6 +12,8 @@ from routers.shoppingcart import create_shoppingcart
 
 import utils
 
+from routers.auth import manager
+
 router = APIRouter(
     prefix = '/api/users',
     tags = ['Profile Management']

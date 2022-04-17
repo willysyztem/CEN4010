@@ -14,9 +14,6 @@ from routers.shoppingcart import get_shoppingcart
 from routers.auth import manager
 from routers.bookrating import get_averagerating, get_comments_by_isbn
 
-# model imports
-from models.users import Users
-
 templates = Jinja2Templates(directory='./templates')
 router = APIRouter(include_in_schema=False)
 

@@ -146,12 +146,13 @@ function add_cartitem(_user_id, _book_id) {
   fetch("/api/shoppingcart/cartitems/" + _user_id, {
     method: "POST",
     body: JSON.stringify({
-      book_id: _book_id
+      book_id: _book_id,
     }),
     headers: {
       "Content-Type": "application/json",
     },
-  }).then((response) => response.json())
+  })
+    .then((response) => response.json())
     .then((data) => show_snackbar(data.detail));
 }
 
@@ -166,4 +167,13 @@ function delete_cartitem(_cartitem_id) {
   });
 }
 
-
+function add_wishitem_to_wishlist(_wishitem_id, _user_id) {
+  fetch("/api/wishlist/wishitem/" + _wishitem_id + "&&" + _user_id, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then(function () {
+    location.reload();
+  });
+}
