@@ -9,11 +9,14 @@
     {% include 'components/account_top.html' %}
 
     <!-- User Page Info -->
-    <section class="mt-2 vh-100">
+    <section class="mt-2">
         <div class="container-lg mt-2">
             <div class="text-center">
                 <a href="/api/wishlist" class="btn btn-main btn-sm">Wishlist <i class="fa-solid fa-list"></i></a>
                 <a href="/api/cart" class="btn btn-main btn-sm">Cart <i class="fa-solid fa-cart-shopping"></i></a>
+                {% if user.is_superuser == true%}
+                    <a href="/dashboard" class="btn btn-main btn-sm">ADMIN DASHBOARD <i class="fa-solid fa-robot"></i></a>
+                {% endif %}
             </div>
             <div class="accordion mt-2" id="accordionMain">
                 <div class="accordion-item">

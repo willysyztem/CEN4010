@@ -61,7 +61,7 @@ def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get
     response = RedirectResponse(url='/index', status_code=status.HTTP_302_FOUND)
     manager.set_cookie(response, access_token)
     return response
-
+    
 @router.get("/logout")
 def logout(response : Response):
   response = RedirectResponse('/login', status_code= 302)

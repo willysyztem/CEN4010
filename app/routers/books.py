@@ -12,7 +12,7 @@ router = APIRouter(
     tags=['Books Management']
 )
 
-@router.post('/')
+@router.post('/', include_in_schema=False)
 def create_book(book: schema.Books, db: Session = Depends(get_db)):
     try:
         new_book = model.Books(
@@ -31,9 +31,9 @@ def create_book(book: schema.Books, db: Session = Depends(get_db)):
         db.add(new_book)
         db.commit()
         db.refresh(new_book)
-        return new_book
+        return {'detail': f'Book Created'}
     except Exception as e:
-        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not create book => {e}')
+        raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Error => {e}')
 
 
 @router.get('/all')

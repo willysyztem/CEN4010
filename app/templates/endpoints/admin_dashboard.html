@@ -1,0 +1,104 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+<title>Bookstore 21 • ADMIN DASHBOARD</title>
+{% endblock%}
+
+{% block content%}
+<!-- User Page Top -->
+{% include 'components/account_top.html' %}
+
+<section class="mt-2">
+    <div class="container-lg mt-2">
+        <div class="text-center">
+            <a href="/api/wishlist" class="btn btn-main btn-sm">Wishlist <i class="fa-solid fa-list"></i></a>
+            <a href="/api/cart" class="btn btn-main btn-sm">Cart <i class="fa-solid fa-cart-shopping"></i></a>
+            <a href="/api/user/{{user.username}}" class="btn btn-main btn-sm">Account <i
+                    class="fa-solid fa-user"></i></a>
+        </div>
+        <div class="accordion mt-2" id="accordionMain">
+            <!-- Creates A Book -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                        Create Book
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionMain">
+                    <div class="accordion-body">
+                        <label for="book_isbn">ISBN</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="book_isbn" placeholder="Book ISBN: Str"><br>
+                        <label for="book_title">Book Title</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="book_title" placeholder="Book Title: Str"><br>
+                        <label for="book_published_date">Published Date</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="book_published_date"
+                            placeholder="Book Published Date: YY-MM-DD"><br>
+                        <label for="book_description">Book Description</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="book_description"
+                            placeholder="Book Description: Str"><br>
+                        <label for="book_price">Book Price</label><br>
+                        <input type="number" class="mt-2 mb-3 w-25" id="book_price" placeholder="Book Price: Float"><br>
+                        <label for="book_copies">Book Copies Sold</label><br>
+                        <input type="number" class="mt-2 mb-3 w-25" id="book_copies"
+                            placeholder="Book Copies Sold: 0 if new: Int"><br>
+                        <label for="book_author">Book Author ID</label><br>
+                        <input type="number" class="mt-2 mb-3 w-25" id="book_author"
+                            placeholder="Book Author ID: Integer"><br>
+                        <label for="book_publisher">Book Publisher ID</label><br>
+                        <input type="number" class="mt-2 mb-3 w-25" id="book_publisher"
+                            placeholder="Book Publisher ID: Integer"><br>
+                        <label for="book_genre">Book Genre</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="book_genre" placeholder="Book Genre: Str"><br>
+                        <label for="book_pages">Book Pages</label><br>
+                        <input type="number" class="mt-2 mb-3 w-25" id="book_pages" placeholder="Book Pages: Integer"><br>
+                        <button class="btn btn-success" onclick="create_book()">Create New Book</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Creates An Author -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Create Author
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                    data-bs-parent="#accordionMain">
+                    <div class="accordion-body">
+                        <label for="author_first_name">First Name</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="author_first_name" placeholder="John"><br>
+                        <label for="author_last_name">Last Name</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="author_last_name" placeholder="Doe"><br>
+                        <label for="author_biography">Biography</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="author_biography" placeholder="John"><br>
+                        <button class="btn btn-success" onclick="create_author()">Create New Author</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Creates A Publisher -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Create Publisher
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+                    data-bs-parent="#accordionMain">
+                    <div class="accordion-body">
+                        <label for="publisher_name">Company Name</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="publisher_name" placeholder="Group 21 Publishing Corp"><br>
+                        <label for="publisher_country">Country</label><br>
+                        <input type="text" class="mt-2 mb-3 w-25" id="publisher_country" placeholder="US OF A!"><br>
+                        <button class="btn btn-success" onclick="create_publisher()">Create New Publisher</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

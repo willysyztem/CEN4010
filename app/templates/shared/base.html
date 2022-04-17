@@ -18,10 +18,12 @@
 <body>
     {% include 'components/navbar.html' %}
 
+    <div class="flex-wrapper">
     {% block content %}
     {% endblock %}
 
     {% include 'components/footer.html' %}
+    </div>
 
     {% block scripts %}
     {% endblock %}

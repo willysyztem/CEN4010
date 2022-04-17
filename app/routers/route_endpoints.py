@@ -62,5 +62,10 @@ def get_user_wishlist(request: Request, db: Session = Depends(get_db), user=Depe
 # catalog page
 @router.get('/catalog')
 def get_catalog(request: Request, db: Session = Depends(get_db), user=Depends(manager)):
-    books = get_bestsellers(db)
-    return templates.TemplateResponse('endpoints/catalog.html', {'request': request, 'user': user, 'books': books})
+    return templates.TemplateResponse('endpoints/catalog.html', {'request': request, 'user': user})
+
+# admin dashboard page
+@router.get('/dashboard')
+def get_catalog(request: Request, db: Session = Depends(get_db), user=Depends(manager)):
+    if user.is_superuser:
+        return templates.TemplateResponse('endpoints/admin_dashboard.html', {'request': request, 'user': user})

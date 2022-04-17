@@ -12,14 +12,10 @@ from routers.shoppingcart import create_shoppingcart
 
 import utils
 
-from routers.auth import manager
-
 router = APIRouter(
     prefix = '/api/users',
     tags = ['Profile Management']
 )
-
-# current_user_id: int = Depends(oauth2.get_current_user)
 
 @router.post('/', status_code = status.HTTP_201_CREATED, response_model=schema.ShowUser)
 def create_user(user: schema.User, db: Session = Depends(get_db)): 
@@ -45,9 +41,16 @@ def create_user(user: schema.User, db: Session = Depends(get_db)):
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'User already exists')
 
-@router.get('/', response_model = List[schema.ShowUser])
+@router.get('/all', response_model = List[schema.ShowUser])
 def get_all_users(db: Session = Depends(get_db)):
     users = db.query(model.Users).all()
+    if not users:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find users')
+    return users
+
+@router.get('/username/{username}', response_model=schema.ShowUser)
+def get_by_username(username: EmailStr, db: Session = Depends(get_db)):
+    users = db.query(model.Users).filter(model.Users.username == username).first()
     if not users:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find users')
     return users
@@ -64,11 +67,12 @@ def update_user(username: EmailStr, user_info: schema.UpdateUser, db: Session = 
     db.commit()
     return {'detail': f'Update user {username}'}
 
-@router.delete('/')
-def delete_user(username: EmailStr, db: Session = Depends(get_db)):
-    user = db.query(model.Users).filter(model.Users.username == username).first()
-    if not user:
-        raise HTTPException(status.HTTP_204_NO_CONTENT, f'No query found with username: {username}')
-    db.delete(user)
-    db.commit()
-    return {'detail': f'Deleted user {username}'}
+# not needed for demo
+# @router.delete('/')
+# def delete_user(username: EmailStr, db: Session = Depends(get_db)):
+#     user = db.query(model.Users).filter(model.Users.username == username).first()
+#     if not user:
+#         raise HTTPException(status.HTTP_204_NO_CONTENT, f'No query found with username: {username}')
+#     db.delete(user)
+#     db.commit()
+#     return {'detail': f'Deleted user {username}'}
