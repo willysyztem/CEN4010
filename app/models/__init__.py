@@ -8,3 +8,4 @@ from .shoppingcart import ShoppingCart
 from .users import Users
 from .wishitems import WishItems
 from .wishlist import WishList
+from .bookrating import BookRating

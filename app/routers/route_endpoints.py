@@ -12,6 +12,7 @@ from routers.creditcards import get_user_creditcards
 from routers.wishlist import get_wishlist
 from routers.shoppingcart import get_shoppingcart
 from routers.auth import manager
+from routers.bookrating import get_averagerating, get_comments_by_isbn
 
 templates = Jinja2Templates(directory='./templates')
 router = APIRouter(include_in_schema=False)
@@ -39,7 +40,9 @@ def get_book_page(isbn, request: Request, db: Session = Depends(get_db), user=De
     author = get_author(book.author_id, db)
     publisher = get_publisher(book.publisher_id, db)
     wishlists = get_wishlist(user.id, db)
-    return templates.TemplateResponse('endpoints/book_page.html', {'request': request, 'book': book, 'author': author, 'publisher': publisher, 'wishlists': wishlists,'user': user})
+    ratings = get_averagerating(isbn, db)
+    comments = get_comments_by_isbn(isbn, db)
+    return templates.TemplateResponse('endpoints/book_page.html', {'request': request, 'book': book, 'author': author, 'publisher': publisher, 'wishlists': wishlists,'user': user, 'ratings': ratings, 'comments': comments})
 
 # user page
 @router.get('/api/user/{username}')

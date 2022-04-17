@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
 # Import all routers (apis)
-from routers import auth, authors, books, creditcards, orders, publishers, shoppingcart, users, wishlist, route_endpoints
+from routers import auth, authors, books, creditcards, orders, publishers, shoppingcart, users, wishlist, bookrating, route_endpoints
 
 main_router = APIRouter()
 
@@ -15,3 +15,4 @@ main_router.include_router(shoppingcart.router)
 main_router.include_router(users.router)
 main_router.include_router(wishlist.router)
 main_router.include_router(route_endpoints.router)
+main_router.include_router(bookrating.router)
