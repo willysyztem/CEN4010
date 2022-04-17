@@ -90,8 +90,6 @@ def get_all_comments(db: Session = Depends(get_db)):
             comment = i.comment,
             created_at = i.created_at
         ))
-    if not bookcomment:
-        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = 'Could not find book comments')
     return bookcomment
 
 @router.get('/bookcomment/{isbn}')

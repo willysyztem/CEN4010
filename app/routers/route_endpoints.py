@@ -41,7 +41,8 @@ def get_book_page(isbn, request: Request, db: Session = Depends(get_db), user=De
     publisher = get_publisher(book.publisher_id, db)
     wishlists = get_wishlist(user.id, db)
     ratings = get_averagerating(isbn, db)
-    return templates.TemplateResponse('endpoints/book_page.html', {'request': request, 'book': book, 'author': author, 'publisher': publisher, 'wishlists': wishlists,'user': user, 'ratings': ratings})
+    comments = get_comments_by_isbn(isbn, db)
+    return templates.TemplateResponse('endpoints/book_page.html', {'request': request, 'book': book, 'author': author, 'publisher': publisher, 'wishlists': wishlists,'user': user, 'ratings': ratings, 'comments': comments})
 
 # user page
 @router.get('/api/user/{username}')
