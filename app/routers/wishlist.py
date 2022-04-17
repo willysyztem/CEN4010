@@ -104,9 +104,9 @@ def add_wishitem_to_shoppingcart(wishitem_id: int, user_id: int, db: Session = D
     try:
         wishitem = get_wishitem(wishitem_id, db)
         new_cartitem = add_cartitem(user_id, models.cartitems.CartItems(book_id=wishitem.book_id), db)
-        db.add(new_cartitem)
-        db.commit()
-        db.refresh(new_cartitem)
+
+        # remove wishitem from wishlist once it is added to shoppingcart
+        delete_wishitem(wishitem_id, db)
         return new_cartitem
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not add wishitem to cart item => {e}')

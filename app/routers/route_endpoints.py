@@ -13,9 +13,6 @@ from routers.wishlist import get_wishlist
 from routers.shoppingcart import get_shoppingcart
 from routers.auth import manager
 
-# model imports
-from models.users import Users
-
 templates = Jinja2Templates(directory='./templates')
 router = APIRouter(include_in_schema=False)
 

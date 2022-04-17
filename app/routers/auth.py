@@ -25,7 +25,7 @@ from models.users import Users
 
 import utils
 
-router = APIRouter(tags=['Authentication'])
+router = APIRouter(tags=['Authentication'], include_in_schema=False)
 
 @manager.user_loader(session_provider=get_db)
 def get_user_by_username(
