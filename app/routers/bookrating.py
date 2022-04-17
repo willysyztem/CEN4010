@@ -26,7 +26,7 @@ def get_all_bookratings(db: Session = Depends(get_db)):
     bookrating: list = []
     for i in bookratingtemp:
         bookrating.append(model.BookRating(
-            user_id = i.id,
+            user_id = i.user_id,
             book = booksRouter.get_book_by_isbn(i.book, db).title,
             rating = i.rating,
             created_at = i.created_at
@@ -85,7 +85,7 @@ def get_all_comments(db: Session = Depends(get_db)):
     bookcomment: list = []
     for i in bookcommenttemp:
         bookcomment.append(model.BookComment(
-            user_id = i.id,
+            user_id = i.user_id,
             book = booksRouter.get_book_by_isbn(i.book, db).title,
             comment = i.comment,
             created_at = i.created_at
