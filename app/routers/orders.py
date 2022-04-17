@@ -52,4 +52,4 @@ def delete_order(order_id, db: Session = Depends(get_db)):
         raise HTTPException(status.HTTP_204_NO_CONTENT, f'No query found with username: {order_id}')
     db.delete(order)
     db.commit()
-    return {'detail': f'Deleted user {order_id}'}
+    return {'detail': f'Deleted order {order_id}'}

@@ -1,0 +1,15 @@
+{% extends 'shared/base.html' %}
+
+{% block title %}
+    <title>Bookstore 21 • Home</title>
+{% endblock%}
+
+{% block content%}
+<section id="catalog" class="py-2">
+    <div class="container-lg text-center">
+        <h1>Bestsellers</h1>
+        <hr>
+        {% include 'components/bookcard.html' %}
+    </div>
+</section>
+{% endblock %}

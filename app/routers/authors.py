@@ -1,7 +1,5 @@
 from fastapi import Depends, status, HTTPException, APIRouter
 
-from typing import List
-
 from sqlalchemy.orm import Session
 from db.database import get_db
 
@@ -14,9 +12,8 @@ router = APIRouter(
 )
 
 
-@router.post('/', status_code = status.HTTP_201_CREATED)
+@router.post('/', status_code = status.HTTP_201_CREATED, include_in_schema=False)
 def create_author(author: schema.Authors, db: Session = Depends(get_db)):
-    
     try:
         new_author = model.Authors(
             id = len(db.query(model.Authors).all()) +1,
@@ -27,7 +24,7 @@ def create_author(author: schema.Authors, db: Session = Depends(get_db)):
         db.add(new_author)
         db.commit()
         db.refresh(new_author)
-        return new_author
+        return {'detail': f'Author Created'}
     except Exception as e:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Error => {e}')
 

@@ -1,26 +1,69 @@
-from fastapi import Depends, status, HTTPException, APIRouter, Response
+from datetime import timedelta
+from typing import Callable, Optional, Iterator, Callable
+
+from fastapi import Depends, status, APIRouter, Response
+from fastapi.responses import RedirectResponse
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
+
+from fastapi_login import LoginManager
+from fastapi_login.exceptions import InvalidCredentialsException
+
+SECRET_KEY = '19af20df8a8d2025532e3ad86df08a7565a13f3f17644f84d874004a4ca741db'
+
+manager = LoginManager(
+    secret=SECRET_KEY, 
+    token_url='/login', 
+    use_cookie=True, 
+    cookie_name='login-bs.cookie',
+    default_expiry=timedelta(hours=12)
+    )
 
 from sqlalchemy.orm import Session
 from db.database import get_db
 
-import models.users as model
-import schemas.token as schema
+from models.users import Users
 
-import utils, oauth2
+import utils
 
-router = APIRouter(tags=['Authentication'])
+router = APIRouter(tags=['Authentication'], include_in_schema=False)
 
-@router.post('/login', response_model = schema.Token)
-def login(user_login: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+@manager.user_loader(session_provider=get_db)
+def get_user_by_username(
+    _username: str, 
+    db: Optional[Session] = None,
+    session_provider: Callable[[], 
+    Iterator[Session]] = None
+):
+    if db is None and session_provider is None:
+        raise ValueError("db and session_provider cannot both be None.")
 
-    user = db.query(model.Users).filter(model.Users.username == user_login.username).first()
+    if db is None:
+        db = next(session_provider())
+
+    user = db.query(Users).where(Users.username == _username).first()
+    return user
+
+@router.post('/login')
+def login(data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+    username = data.username
+    password = data.password
+    user = get_user_by_username(username, db)
     if not user:
-        raise HTTPException(status_code = status.HTTP_403_FORBIDDEN, detail = f'Invalid Login')
+        raise InvalidCredentialsException
     # verifies if login password is the same
-    verified = utils.verify(user_login.password, user.password)
+    verified = utils.verify(password, user.password)
     if not verified:
-        raise HTTPException(status_code = status.HTTP_403_FORBIDDEN, detail = f'Invalid Login')
+        raise InvalidCredentialsException
 
-    access_token = oauth2.create_access_token(data = {'user_id': user.id})
-    return {'access_token': access_token, "token_type": 'bearer'}
+    access_token = manager.create_access_token(
+        data = {'sub': username}
+    )
+    response = RedirectResponse(url='/index', status_code=status.HTTP_302_FOUND)
+    manager.set_cookie(response, access_token)
+    return response
+    
+@router.get("/logout")
+def logout(response : Response):
+  response = RedirectResponse('/login', status_code= 302)
+  response.delete_cookie(key ='login-bs.cookie')
+  return response

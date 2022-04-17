@@ -6,7 +6,7 @@ class Publishers(Base):
     __tablename__ = 'publishers'
 
     id = Column(Integer, primary_key=True, index=True)
-    company_name = Column(String, nullable=False, unique=True)
+    company_name = Column(String, nullable=False)
     country = Column(String)
     
     # Relationships

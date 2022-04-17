@@ -47,7 +47,7 @@ def add_cartitem(user_id: int, cartitems: schema.CartItem, db: Session = Depends
         db.add(new_cartitems)
         db.commit()
         db.refresh(new_cartitems)
-        return new_cartitems
+        return {'detail': f'Book added to shopping cart!'}
     except Exception:
         raise HTTPException(status.HTTP_500_INTERNAL_SERVER_ERROR, detail = f'Could not create cart item.')
 
@@ -64,3 +64,12 @@ def get_cartitem(cartitem_id: int, db: Session = Depends(get_db)):
     if not cartitem:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = f'Could not find cart item with id: {cartitem_id}')
     return cartitem
+
+@router.delete('/cartitems/{cartitem_id}')
+def delete_cartitem(cartitem_id, db: Session = Depends(get_db)):
+    cartitem = db.query(models.cartitems.CartItems).filter(models.cartitems.CartItems.id == cartitem_id)
+    if cartitem.first() == None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail=f'Cartitem with id : {cartitem_id} does not exist')
+    cartitem.delete()
+    db.commit()
+    return { 'detail' : 'Cart Item Deleted' }

@@ -15,4 +15,9 @@ passlib[bcrypt]
 # for authentication
 python-jose[cryptography]
 # for authentication - forms
-python-multipart 
+python-multipart
+
+# for html templates
+jinja2
+
+fastapi_login

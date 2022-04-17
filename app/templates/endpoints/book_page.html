@@ -1,0 +1,118 @@
+{% extends 'shared/base.html' %} {% block title %}
+<title>{{book.title}}</title>
+{% endblock%} {% block style %}
+<style>
+    .bg-section-img {
+        background-image: url("https://covers.openlibrary.org/b/isbn/{{book.isbn}}.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+</style>
+{% endblock %} {% block content%}
+<!-- Book (product page) -->
+<section class="my-5 p-0">
+    <div class="container-lg bg-section-img">
+        <div class="row blur p-4 justify-content-center">
+            <div class="col-xs-12 col-md-3">
+                <img class="rounded-3 img-fluid mx-auto d-block"
+                    src="https://covers.openlibrary.org/b/isbn/{{book.isbn}}.jpg" alt="" />
+            </div>
+
+            <div class="col-xs-12 col-md-8">
+                <h1 class="text-white fw-bold">{{book.title}}</h1>
+                <span class="text-white">{{book.published_date}} • </span>
+                <span class="text-white">{{book.genre}} • </span>
+                <span class="text-white">{{book.pages}} Pages • </span>
+                <span class="text-white">{{book.isbn}} ISBN</span>
+                <div class="my-4">
+                    {% if ratings|length > 0 %}
+                        <span class="text-white">{{ratings}}/5</span>
+                    {% else %}
+                        <span class="text-white">0/5</span>
+                    {% endif %}
+                    <!-- <i class="fa-solid fa-star display-5 text-warning"></i>
+                    <i class="fa-solid fa-star display-5 text-warning"></i>
+                    <i class="fa-solid fa-star display-5 text-warning"></i>
+                    <i class="fa-solid fa-star-half-stroke display-5 text-warning"></i>
+                    <i class="fa-regular fa-star display-5 text-warning"></i> -->
+                </div>
+                <h3 class="text-white">Overview</h3>
+                <p class="text-white">{{book.description}}</p>
+                <p class="text-white fw-bold m-0">
+                    {{author.first_name}} {{author.last_name}}
+                </p>
+                <p class="text-white">Author</p>
+                <p class="text-white fw-bold m-0">{{publisher.company_name}}</p>
+                <p class="text-white">Publisher</p>
+                <button type="button" class="btn btn-warning btn-sm"
+                    onclick="add_cartitem('{{user.id}}', '{{book.id}}')">
+                    Add To Cart
+                </button>
+                <div class="dropdown mt-1">
+                    <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuWishlist"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Add To Wishlist <i class="fa-solid fa-list"></i>
+                    </button>
+                    {% if wishlists is defined and wishlists|length > 0 %}
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuWishlist">
+                        {% for wishlist in wishlists %}
+                        <li>
+                            <a class="dropdown-item"
+                                onclick="add_wishitem('{{wishlist.id}}', '{{book.id}}')">{{wishlist.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuWishlist">
+                        <li>
+                            <a class="dropdown-item" href="/api/wishlist">Create Wishlist</a>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-2">
+    <div class="container-lg mt-2">
+        {% if comments is defined and comments|length > 0 %}
+            {% for comment in comments %}
+            <div class="accordion mt-2" id="accordionMain">
+                <!-- Book Comments -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading{{loop.index}}">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapse{{loop.index}}" aria-expanded="true" aria-controls="collapse{{loop.index}}">
+                            
+                        </button>
+                    </h2>
+                    <div id="collapse{{loop.index}}" class="accordion-collapse collapse show" aria-labelledby="heading{{loop.index}}"
+                        data-bs-parent="#accordionMain">
+                        <div class="accordion-body">
+                            {{comment.comment}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <h1>No Comments For This Book.</h1>
+        {% endif %}
+        <!-- Add Comment -->
+        <div class="my-4">
+            <h4>Rate & Comment</h4>
+            <div class="mb-3 w-25">
+                <label for="rating" class="form-label">Rating</label>
+                <input type="number" class="form-control" id="rating">
+            </div>
+            <div class="mb-3 w-25">
+                <label for="comment" class="form-label">Add Your New Comment...</label>
+                <textarea class="form-control" id="comment" rows="3"></textarea>
+            </div>
+            <button class="btn btn-success" onclick="post_comment_rating('{{book.isbn}}', '{{user.id}}')">Post Comment</button>
+        </div>
+    </div>
+</section>
+{% endblock %}

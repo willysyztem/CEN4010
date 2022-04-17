@@ -10,5 +10,5 @@ class WishItems(Base):
     book_id = Column(Integer, ForeignKey('books.id', ondelete='CASCADE'), nullable=False)
 
     # Relationships
-    wishlist = relationship('WishList', back_populates='wishitems')
-    book = relationship('Books', back_populates='wishitems')
+    wishlist = relationship('WishList', back_populates='wishitems', cascade='delete')
+    book = relationship('Books', back_populates='wishitems', cascade='delete')
